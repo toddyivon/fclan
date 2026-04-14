@@ -17,8 +17,8 @@ const navItems = [
   { href: "/sessions", icon: Car, label: "Sessions" },
   { href: "/analysis", icon: Brain, label: "AI Analysis" },
   { href: "/settings", icon: Settings, label: "Settings" },
-  { href: "/admin", icon: Shield, label: "Admin" },
 ];
+const adminNavItem = { href: "/admin", icon: Shield, label: "Admin" };
 
 export default async function DashboardLayout({
   children,
@@ -36,11 +36,13 @@ export default async function DashboardLayout({
 
   const { data: userData } = await supabase
     .from("users")
-    .select("tier, name")
+    .select("tier, name, role")
     .eq("id", user.id)
     .single();
 
   const tierLabel = userData?.tier === "ai_premium" ? "AI Premium" : userData?.tier === "pro" ? "Pro" : "Free";
+  const isAdmin = userData?.role === "admin";
+  const visibleNavItems = isAdmin ? [...navItems, adminNavItem] : navItems;
 
   return (
     <div className="min-h-screen bg-background flex">
@@ -60,7 +62,7 @@ export default async function DashboardLayout({
 
         {/* Navigation */}
         <nav className="flex-1 p-4 space-y-1">
-          {navItems.map((item) => (
+          {visibleNavItems.map((item) => (
             <Link key={item.href} href={item.href}>
               <Button
                 variant="ghost"
@@ -125,7 +127,7 @@ export default async function DashboardLayout({
 
         {/* Mobile bottom nav */}
         <nav className="md:hidden border-t border-border bg-card px-2 py-2 flex justify-around">
-          {navItems.map((item) => (
+          {visibleNavItems.map((item) => (
             <Link key={item.href} href={item.href} className="flex flex-col items-center gap-1 py-1 px-3 text-muted-foreground hover:text-violet-400 transition-colors">
               <item.icon className="h-5 w-5" />
               <span className="text-[10px]">{item.label}</span>

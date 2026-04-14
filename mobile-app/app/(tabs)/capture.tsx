@@ -5,7 +5,7 @@ import { useTelemetryStore } from '../../src/store/telemetry';
 import { gt7UDPListener } from '../../src/gt7/udp-listener';
 import { decryptGt7Packet } from '../../src/gt7/salsa20';
 import { parsePacketType3, type Gt7Telemetry } from '../../src/gt7/parser';
-import { sendTelemetryBatch } from '../../api/ingest';
+import { sendTelemetryBatch } from '../../src/api/ingest';
 
 export default function CaptureScreen() {
   const { isCapturing, ps5Ip, apiKey, currentPacket, ingestUrl, error } = useTelemetryStore();

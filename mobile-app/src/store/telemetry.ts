@@ -48,7 +48,7 @@ export const useTelemetryStore = create<TelemetryState>((set, get) => ({
   sessionStarted: false,
   sessionId: null,
   batchBuffer: [],
-  ingestUrl: '',
+  ingestUrl: 'https://gt7.donodomorro.com',
   error: null,
 
   setPs5Ip: (ip) => set({ ps5Ip: ip }),

@@ -9,13 +9,13 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.gt7telemetry.app"
+      "bundleIdentifier": "com.toddyone.gt7telemetry"
     },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#0A0A0A"
       },
-      "package": "com.gt7telemetry.app"
+      "package": "com.toddyone.gt7telemetry"
     },
     "web": {
       "bundler": "metro",
