@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -51,9 +50,9 @@ export default async function DashboardLayout({
         <div className="p-6 border-b border-border">
           <Link href="/dashboard" className="flex items-center gap-2">
             <div className="h-8 w-8 rounded-lg bg-violet-600 flex items-center justify-center">
-              <motion.div whileHover={{ rotate: 15 }}>
+              <div>
                 <Gauge className="h-5 w-5 text-white" />
-              </motion.div>
+              </div>
             </div>
             <span className="font-bold text-lg">GT7 Telemetry</span>
           </Link>

@@ -2,6 +2,15 @@
 
 # dependencies
 /node_modules
+mobile-app/node_modules
+
+# mobile
+mobile-app/.expo
+mobile-app/ios/
+mobile-app/android/
+
+# claude
+.claude/
 /.pnp
 .pnp.*
 .yarn/*

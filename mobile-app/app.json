@@ -22,8 +22,14 @@
       "output": "static"
     },
     "plugins": [
-      "expo-router",
-      "react-native-udp"
-    ]
+      "expo-router"
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "b5d5990c-7fa9-4b26-8014-86691c06b897"
+      }
+    },
+    "owner": "toddyone"
   }
 }

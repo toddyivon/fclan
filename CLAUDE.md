@@ -11,13 +11,17 @@ This project uses **Next.js 16.2.3 with React 19**. APIs, conventions, and file 
 ## Commands
 
 ```bash
-npm run dev      # Next.js dev server (localhost:3000)
-npm run build    # production build
-npm run start    # run built app
-npm run lint     # eslint (flat config: eslint.config.mjs)
+npm run dev        # Next.js dev server (localhost:3000)
+npm run build      # production build
+npm run start      # run built app
+npm run lint       # eslint (flat config: eslint.config.mjs)
+npm run typecheck  # tsc --noEmit
+npm test           # vitest
 ```
 
-No test runner is configured. Database migrations are raw SQL applied in the Supabase SQL editor (or via `scripts/apply-migration.mjs` / `scripts/run-migration.js`). Drizzle ORM is installed for typed queries but no `drizzle-kit` scripts are wired into `package.json`.
+Mobile (`cd mobile-app`): `npm install --legacy-peer-deps` (peer conflicts with react-native-udp). Native build via `npx expo prebuild --platform ios`. Cloud builds via `eas build -p ios --profile preview` → TestFlight. Local `expo run:ios --device` requires Xcode version matching the iPhone's iOS (currently Xcode 26.0.1 can't target iOS 26.3+ devices).
+
+Database migrations are raw SQL in `supabase/migrations/`; apply with `supabase db push`. The legacy `scripts/run-migration.js` and `scripts/apply-migration.mjs` were removed (had hardcoded credentials). Drizzle ORM is installed but no drizzle-kit scripts are wired in.
 
 Environment setup is documented in `SETUP.md`. Required env vars: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `DATABASE_URL`, `STRIPE_*`, `OPENAI_API_KEY`.
 
@@ -29,9 +33,9 @@ This is a GT7 (Gran Turismo 7) telemetry SaaS. Full product spec lives in `specs
 
 **Two apps in one repo:**
 - Web dashboard: root (Next.js App Router, Tailwind v4, shadcn-style UI in `src/components/ui/`).
-- Mobile capture app: `mobile-app/` (Expo; requires `npx expo prebuild` due to native `react-native-udp`).
+- Mobile capture app: `mobile-app/` (Expo SDK 53, React Native 0.79, Expo Router). Native build required due to `react-native-udp` — Expo Go does NOT work. Bundle id `com.gt7telemetry.app`. EAS project id lives in `mobile-app/app.json` `extra.eas.projectId`.
 
-The shared telemetry packet shape lives in `src/lib/gt7/types.ts` and is the canonical contract between mobile and web.
+The canonical telemetry packet shape lives in `src/shared/telemetry.ts` (imported by web via `src/lib/gt7/types.ts` re-export). Mobile duplicates the shape in `mobile-app/src/gt7/parser.ts` — keep them in sync.
 
 **Route groups (`src/app/`):**
 - `(marketing)` — public landing.
@@ -47,4 +51,14 @@ The shared telemetry packet shape lives in `src/lib/gt7/types.ts` and is the can
 
 **Billing:** Stripe with two price IDs (`STRIPE_PRICE_PRO`, `STRIPE_PRICE_AI_PREMIUM`). Tier gating (Free / Pro / AI Premium) governs session-history retention, AI analysis quotas, and API-key limits — see `specs/spec.md` before adding gated features.
 
-**Deployment:** `Dockerfile` + `docker-compose.yml` + `deploy.sh` target a self-hosted server (see session history for 10.70.23.247 Proxmox LXC context). Not Vercel-first despite the Next stack.
+**Deployment:** `Dockerfile` + `docker-compose.yml` + `deploy.sh` target a self-hosted server (Proxmox LXC at 10.70.23.247, user `missola`). LXC restricts sysctl writes — container compose must use `network_mode: host` + `security_opt: apparmor:unconfined` to start. Local dev runs the same image on port 3001 since port 3000 is usually occupied. Not Vercel-first despite the Next stack.
+
+**Key internal modules added in recent refactor:**
+- `src/env.ts` — Zod-validated env vars (server + client split).
+- `src/lib/auth/safe-redirect.ts` — validates `redirectedFrom` against `ALLOWED_PREFIXES` to block open-redirect.
+- `src/lib/billing/quota.ts` — `getQuota`, `consumeAiAnalysis` (monthly reset); reads `user_quotas` table.
+- `supabase/migrations/002_improvements.sql` — adds `role` to users, ON DELETE CASCADE on FKs, hot-path indexes, `rate_limits` + `consume_rate_limit()` RPC, `stripe_webhook_events` idempotency table, `user_quotas` + `sync_user_quota_tier` trigger, `purge_free_tier_sessions()` cron fn. Must be applied via `supabase db push`.
+
+**Gotchas:**
+- `(dashboard)/layout.tsx` is a server component (uses server Supabase client + `redirect`). Do NOT import `framer-motion` there — it breaks SSR with digest `1823605700`. Put motion inside client child components instead.
+- Middleware cookie `setAll` must propagate cookies to BOTH `request.cookies` AND a fresh `NextResponse.next({ request })` with `options`, otherwise Supabase session doesn't persist after login.
