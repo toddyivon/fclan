@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "GT7 Telemetry",
+    "slug": "gt7-telemetry-mobile",
+    "scheme": "gt7telemetry",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.gt7telemetry.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0A0A0A"
+      },
+      "package": "com.gt7telemetry.app"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static"
+    },
+    "plugins": [
+      "expo-router",
+      "react-native-udp"
+    ]
+  }
+}
