@@ -8,7 +8,10 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "test": "vitest"
+    "test": "vitest",
+    "test:endpoints": "node scripts/test-endpoints.mjs",
+    "test:realtime": "node scripts/test-realtime.mjs",
+    "mock:ai": "node scripts/mock-openrouter.mjs"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.52",
