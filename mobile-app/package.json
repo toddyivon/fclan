@@ -12,9 +12,11 @@
     "axios": "^1.7.0",
     "expo": "~53.0.0",
     "expo-dev-client": "~5.2.4",
+    "expo-keep-awake": "~14.1.4",
     "expo-linking": "^55.0.13",
     "expo-router": "~5.1.11",
     "expo-secure-store": "~14.2.4",
+    "expo-speech": "~13.1.7",
     "expo-status-bar": "~2.2.3",
     "expo-updates": "~0.28.18",
     "react": "19.0.0",
@@ -27,7 +29,7 @@
     "zustand": "^5.0.0"
   },
   "devDependencies": {
-    "@types/react": "~18.3.0",
-    "typescript": "~5.3.0"
+    "@types/react": "~19.0.10",
+    "typescript": "~5.8.3"
   }
 }

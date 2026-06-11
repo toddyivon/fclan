@@ -9,7 +9,10 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.toddyone.gt7telemetry"
+      "bundleIdentifier": "com.toddyone.gt7telemetry",
+      "infoPlist": {
+        "NSLocalNetworkUsageDescription": "This app reads Gran Turismo 7 telemetry from your PlayStation over the local network."
+      }
     },
     "android": {
       "adaptiveIcon": {
