@@ -16,22 +16,24 @@ interface ApiKey {
 export function ApiKeysSection() {
   const [keys, setKeys] = useState<ApiKey[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
   const [newName, setNewName] = useState("");
   const [justCreated, setJustCreated] = useState<string | null>(null);
 
   async function load() {
-    const res = await fetch("/api/keys");
-    if (!res.ok) {
-      setError("Failed to load keys");
-      return;
+    setLoadError(null);
+    try {
+      const res = await fetch("/api/keys");
+      if (!res.ok) throw new Error(`Failed to load keys (${res.status})`);
+      const data = await res.json();
+      setKeys(data.keys);
+    } catch (e: unknown) {
+      setLoadError(e instanceof Error && e.message ? e.message : "Failed to load keys");
     }
-    const data = await res.json();
-    setKeys(data.keys);
   }
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     load();
   }, []);
 
@@ -56,8 +58,17 @@ export function ApiKeysSection() {
 
   async function remove(id: string) {
     if (!confirm("Delete this API key? Devices using it will stop working.")) return;
-    const res = await fetch(`/api/keys?id=${id}`, { method: "DELETE" });
-    if (res.ok) await load();
+    setError(null);
+    try {
+      const res = await fetch(`/api/keys?id=${id}`, { method: "DELETE" });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.error ?? `Failed to delete key (${res.status})`);
+      }
+      await load();
+    } catch (e: unknown) {
+      setError(e instanceof Error && e.message ? e.message : "Failed to delete key");
+    }
   }
 
   return (
@@ -98,7 +109,17 @@ export function ApiKeysSection() {
             </button>
           </li>
         ))}
-        {keys === null && <li className="text-sm text-muted-foreground">Loading…</li>}
+        {keys === null && loadError === null && (
+          <li className="text-sm text-muted-foreground">Loading…</li>
+        )}
+        {loadError !== null && (
+          <li className="flex items-center gap-3">
+            <p className="text-sm text-destructive">{loadError}</p>
+            <Button size="sm" variant="outline" onClick={load}>
+              Retry
+            </Button>
+          </li>
+        )}
       </ul>
     </div>
   );

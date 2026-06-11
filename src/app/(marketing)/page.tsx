@@ -1,11 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Gauge, Brain, Trophy, Zap, Shield, Smartphone, ChevronRight, Star } from "lucide-react";
+import { Gauge, Brain, Trophy, Zap, Shield, Smartphone, ChevronRight, Star, Menu, X } from "lucide-react";
 import Link from "next/link";
 
 const fadeInUp = {
@@ -26,6 +27,8 @@ const tiers = [
     description: "Start capturing your GT7 telemetry data",
     features: ["Live speed & RPM view", "7-day session history", "Basic charts", "1 API key", "Mobile app capture"],
     cta: "Get Started",
+    href: "/signup",
+    trial: false,
     highlighted: false,
   },
   {
@@ -43,6 +46,8 @@ const tiers = [
       "Telemetry export (CSV/JSON)",
     ],
     cta: "Start Free Trial",
+    href: "/signup?plan=pro",
+    trial: true,
     highlighted: true,
   },
   {
@@ -61,6 +66,8 @@ const tiers = [
       "Priority queue",
     ],
     cta: "Go Premium",
+    href: "/signup?plan=ai_premium",
+    trial: true,
     highlighted: false,
   },
 ];
@@ -75,6 +82,8 @@ const features = [
 ];
 
 export default function LandingPage() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-[#0A0A0A] text-white">
       {/* Navigation */}
@@ -100,7 +109,34 @@ export default function LandingPage() {
               </Button>
             </Link>
           </div>
+          <button
+            type="button"
+            className="md:hidden -mr-2 p-2 text-white/70 hover:text-white transition-colors"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
+            onClick={() => setMobileOpen((o) => !o)}
+          >
+            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </div>
+        {mobileOpen && (
+          <div className="md:hidden border-t border-white/10 bg-[#0A0A0A]/95 px-6 py-4 flex flex-col gap-4 text-sm text-white/60">
+            <Link href="#features" className="hover:text-white transition-colors" onClick={() => setMobileOpen(false)}>
+              Features
+            </Link>
+            <Link href="#pricing" className="hover:text-white transition-colors" onClick={() => setMobileOpen(false)}>
+              Pricing
+            </Link>
+            <Link href="/login" className="hover:text-white transition-colors" onClick={() => setMobileOpen(false)}>
+              Sign In
+            </Link>
+            <Link href="/signup" onClick={() => setMobileOpen(false)}>
+              <Button size="sm" className="w-full bg-violet-600 hover:bg-violet-500">
+                Get Started
+              </Button>
+            </Link>
+          </div>
+        )}
       </motion.nav>
 
       {/* Hero */}
@@ -208,10 +244,13 @@ export default function LandingPage() {
                   <CardDescription>{t.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex items-baseline gap-1 mb-6">
+                  <div className={`flex items-baseline gap-1 ${t.trial ? "mb-1" : "mb-6"}`}>
                     <span className="text-4xl font-bold">{t.price}</span>
                     {t.period && <span className="text-white/60">{t.period}</span>}
                   </div>
+                  {t.trial && (
+                    <p className="text-xs text-violet-400 mb-6">7-day free trial — cancel anytime</p>
+                  )}
                   <ul className="space-y-3">
                     {t.features.map((f, j) => (
                       <li key={j} className="flex items-start gap-2 text-sm">
@@ -224,7 +263,7 @@ export default function LandingPage() {
                   </ul>
                 </CardContent>
                 <CardFooter>
-                  <Link href="/signup" className="w-full">
+                  <Link href={t.href} className="w-full">
                     <Button
                       className={`w-full ${t.highlighted ? "bg-violet-600 hover:bg-violet-500" : "bg-white/10 hover:bg-white/20 text-white"}`}
                     >
