@@ -49,14 +49,21 @@ scp -o StrictHostKeyChecking=accept-new \
   "${PROJECT_DIR}/.env.production" \
   "${SSH_TARGET}:${DEPLOY_DIR}/.env.production"
 
+# LXC hosts need host networking (sysctl restrictions): set DEPLOY_LXC=1.
+COMPOSE_FILES="-f docker-compose.yml"
+if [[ "${DEPLOY_LXC:-0}" == "1" ]]; then
+  COMPOSE_FILES="${COMPOSE_FILES} -f docker-compose.lxc.yml"
+fi
+
 echo "[4/5] Building and starting containers..."
-ssh -o StrictHostKeyChecking=accept-new "${SSH_TARGET}" DEPLOY_DIR="${DEPLOY_DIR}" bash <<'REMOTE'
+ssh -o StrictHostKeyChecking=accept-new "${SSH_TARGET}" \
+  DEPLOY_DIR="${DEPLOY_DIR}" COMPOSE_FILES="${COMPOSE_FILES}" bash <<'REMOTE'
 set -euo pipefail
 cd "${DEPLOY_DIR}"
-docker compose down 2>/dev/null || true
-docker compose up -d --build
+docker compose ${COMPOSE_FILES} down 2>/dev/null || true
+docker compose ${COMPOSE_FILES} up -d --build
 for i in $(seq 1 20); do
-  if docker compose ps | grep -q healthy; then
+  if docker compose ${COMPOSE_FILES} ps | grep -q healthy; then
     echo "Container is healthy"
     break
   fi

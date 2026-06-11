@@ -1,0 +1,6 @@
+# Real secrets live in .env (generate with: sh utils/generate-keys.sh --update-env)
+.env
+
+# Runtime data (Postgres data dir, storage files)
+volumes/db/data/
+volumes/storage/

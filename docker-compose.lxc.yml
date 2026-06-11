@@ -1,0 +1,16 @@
+# Overrides for the Proxmox LXC deploy host: the LXC restricts sysctl writes,
+# so bridge networking fails to start — host networking + unconfined AppArmor
+# are required there (see CLAUDE.md "Deployment").
+#
+# Usage on the LXC:
+#   docker compose -f docker-compose.yml -f docker-compose.lxc.yml up -d --build
+services:
+  gt7-web:
+    network_mode: host
+    security_opt:
+      - apparmor:unconfined
+    # ports are ignored with network_mode: host (the app binds :3000 directly)
+    ports: !reset []
+    networks: !reset []
+
+networks: !reset {}

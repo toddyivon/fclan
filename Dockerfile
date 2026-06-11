@@ -40,7 +40,8 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
+# busybox wget (curl is not installed in node:alpine)
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-  CMD curl -f http://localhost:3000/ || exit 1
+  CMD wget -qO /dev/null http://127.0.0.1:3000/ || exit 1
 
 CMD ["node", "server.js"]
