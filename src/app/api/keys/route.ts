@@ -35,38 +35,32 @@ export async function POST(req: NextRequest) {
 
   const service = getServiceClient();
 
-  const { data: quota } = await service
-    .from("user_quotas")
-    .select("api_keys_used, api_keys_limit")
-    .eq("user_id", user.id)
-    .single();
-
-  if (!quota) {
-    return NextResponse.json({ error: "No quota record" }, { status: 500 });
-  }
-  if (quota.api_keys_used >= quota.api_keys_limit) {
-    return NextResponse.json({ error: "API key limit reached for your tier" }, { status: 403 });
-  }
-
   const raw = `gt7_${randomBytes(24).toString("hex")}`;
   const keyHash = createHash("sha256").update(raw).digest("hex");
 
-  const { data: inserted, error } = await service
-    .from("api_keys")
-    .insert({ user_id: user.id, key_hash: keyHash, name })
-    .select("id, name, created_at")
-    .single();
+  // Atomic create: the RPC locks the quota row, counts REAL keys and only
+  // inserts under the tier limit — concurrent requests cannot oversubscribe.
+  const { data: result, error } = await service.rpc("create_api_key", {
+    p_user_id: user.id,
+    p_key_hash: keyHash,
+    p_name: name,
+  });
 
-  if (error || !inserted) {
+  if (error) {
+    console.error("keys: create_api_key rpc failed", error);
     return NextResponse.json({ error: "Failed to create key" }, { status: 500 });
   }
+  if (!result?.ok) {
+    if (result?.reason === "limit_reached") {
+      return NextResponse.json({ error: "API key limit reached for your tier" }, { status: 403 });
+    }
+    return NextResponse.json({ error: "No quota record" }, { status: 500 });
+  }
 
-  await service
-    .from("user_quotas")
-    .update({ api_keys_used: quota.api_keys_used + 1 })
-    .eq("user_id", user.id);
-
-  return NextResponse.json({ key: { ...inserted, plaintext: raw } }, { status: 201 });
+  return NextResponse.json(
+    { key: { id: result.id, name: result.name, created_at: result.created_at, plaintext: raw } },
+    { status: 201 }
+  );
 }
 
 export async function DELETE(req: NextRequest) {
@@ -88,16 +82,12 @@ export async function DELETE(req: NextRequest) {
 
   await service.from("api_keys").delete().eq("id", id);
 
-  const { data: quota } = await service
-    .from("user_quotas")
-    .select("api_keys_used")
-    .eq("user_id", user.id)
-    .single();
-  if (quota) {
-    await service
-      .from("user_quotas")
-      .update({ api_keys_used: Math.max(0, quota.api_keys_used - 1) })
-      .eq("user_id", user.id);
+  // Recount real keys atomically (cached counters drift under concurrency).
+  const { error: refreshError } = await service.rpc("refresh_api_key_count", {
+    p_user_id: user.id,
+  });
+  if (refreshError) {
+    console.error("keys: refresh_api_key_count failed", refreshError);
   }
 
   return NextResponse.json({ ok: true });

@@ -1,40 +1,74 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
+/**
+ * GET /api/sessions/:id/points
+ * Query:
+ *   - lap=N        only points of that lap_number
+ *   - fields=basic (default) packet_id,speed_ms,rpm,throttle,brake,gear,lap_number
+ *   - fields=full  basic + pos_x,pos_z,tire_temp_fl/fr/rl/rr,fuel_level
+ *
+ * PostgREST silently truncates un-limited selects at 1000 rows, so we page
+ * server-side with .range() in 1000-row chunks (safety cap 100k) before
+ * downsampling to at most 2000 points.
+ */
+
 const MAX_POINTS_RETURNED = 2000;
+const CHUNK_SIZE = 1000;
+const MAX_POINTS_SCANNED = 100_000;
 
-interface PointRow {
-  packet_id: number;
-  speed_ms: number | null;
-  rpm: number | null;
-  throttle: number | null;
-  brake: number | null;
-  gear: number | null;
-}
+const BASIC_FIELDS = [
+  "packet_id",
+  "speed_ms",
+  "rpm",
+  "throttle",
+  "brake",
+  "gear",
+  "lap_number",
+] as const;
 
+const FULL_FIELDS = [
+  ...BASIC_FIELDS,
+  "pos_x",
+  "pos_z",
+  "tire_temp_fl",
+  "tire_temp_fr",
+  "tire_temp_rl",
+  "tire_temp_rr",
+  "fuel_level",
+] as const;
+
+type PointRow = { packet_id: number } & Record<string, number | null>;
+
+/**
+ * Bucket-averages rows down to at most `target` points. packet_id and
+ * lap_number are taken from the first row of each bucket; gear is rounded;
+ * every other numeric field is the bucket average (nulls skipped).
+ */
 function downsample(rows: PointRow[], target: number): PointRow[] {
   if (rows.length <= target) return rows;
   const bucketSize = Math.ceil(rows.length / target);
+  const avgKeys = Object.keys(rows[0]).filter(
+    (k) => k !== "packet_id" && k !== "lap_number"
+  );
   const out: PointRow[] = [];
   for (let i = 0; i < rows.length; i += bucketSize) {
     const bucket = rows.slice(i, i + bucketSize);
-    let sumSpeed = 0, sumRpm = 0, sumThrottle = 0, sumBrake = 0, sumGear = 0;
-    for (const r of bucket) {
-      sumSpeed += r.speed_ms ?? 0;
-      sumRpm += r.rpm ?? 0;
-      sumThrottle += r.throttle ?? 0;
-      sumBrake += r.brake ?? 0;
-      sumGear += r.gear ?? 0;
+    const row: PointRow = { packet_id: bucket[0].packet_id };
+    if ("lap_number" in bucket[0]) row.lap_number = bucket[0].lap_number;
+    for (const key of avgKeys) {
+      let sum = 0;
+      let n = 0;
+      for (const r of bucket) {
+        const v = r[key];
+        if (v != null) {
+          sum += v;
+          n++;
+        }
+      }
+      row[key] = n === 0 ? null : key === "gear" ? Math.round(sum / n) : sum / n;
     }
-    const n = bucket.length;
-    out.push({
-      packet_id: bucket[0].packet_id,
-      speed_ms: sumSpeed / n,
-      rpm: sumRpm / n,
-      throttle: sumThrottle / n,
-      brake: sumBrake / n,
-      gear: Math.round(sumGear / n),
-    });
+    out.push(row);
   }
   return out;
 }
@@ -53,14 +87,43 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     .single();
   if (!session) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
-  const { data, error } = await supabase
-    .from("telemetry_points")
-    .select("packet_id, speed_ms, rpm, throttle, brake, gear")
-    .eq("session_id", id)
-    .order("packet_id", { ascending: true });
+  const sp = req.nextUrl.searchParams;
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  const fieldsParam = sp.get("fields") ?? "basic";
+  if (fieldsParam !== "basic" && fieldsParam !== "full") {
+    return NextResponse.json({ error: "fields must be 'basic' or 'full'" }, { status: 400 });
+  }
+  const columns = (fieldsParam === "full" ? FULL_FIELDS : BASIC_FIELDS).join(", ");
 
-  const reduced = downsample((data ?? []) as PointRow[], MAX_POINTS_RETURNED);
-  return NextResponse.json({ points: reduced, total: data?.length ?? 0, sampled: reduced.length });
+  const lapParam = sp.get("lap");
+  let lap: number | null = null;
+  if (lapParam !== null) {
+    lap = parseInt(lapParam, 10);
+    if (!Number.isFinite(lap) || lap < 0) {
+      return NextResponse.json({ error: "lap must be a non-negative integer" }, { status: 400 });
+    }
+  }
+
+  // Page through PostgREST in 1000-row chunks until exhausted (or cap hit).
+  const all: PointRow[] = [];
+  for (let from = 0; from < MAX_POINTS_SCANNED; from += CHUNK_SIZE) {
+    const to = Math.min(from + CHUNK_SIZE, MAX_POINTS_SCANNED) - 1;
+    let query = supabase
+      .from("telemetry_points")
+      .select(columns)
+      .eq("session_id", id)
+      .order("packet_id", { ascending: true })
+      .range(from, to);
+    if (lap !== null) query = query.eq("lap_number", lap);
+
+    const { data, error } = await query;
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+    const rows = (data ?? []) as unknown as PointRow[];
+    all.push(...rows);
+    if (rows.length < to - from + 1) break;
+  }
+
+  const reduced = downsample(all, MAX_POINTS_RETURNED);
+  return NextResponse.json({ points: reduced, total: all.length, sampled: reduced.length });
 }

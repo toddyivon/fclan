@@ -8,7 +8,6 @@ import {
   jsonb,
   pgEnum,
 } from "drizzle-orm/pg-core";
-import { relations } from "drizzle-orm";
 
 export const tierEnum = pgEnum("tier", ["free", "pro", "ai_premium"]);
 export const subStatusEnum = pgEnum("sub_status", ["active", "canceled", "past_due", "incomplete"]);
