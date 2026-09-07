@@ -228,12 +228,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { token } = await params;
   const data = await getShare(token);
-  if (!data) return { title: "Lap not found — GT7 Telemetry" };
+  if (!data) return { title: "Lap not found — fclan" };
 
   const track = data.session.track_name ?? "Unknown track";
   const car = data.session.car_name ?? "Unknown car";
-  const title = `${formatLapTime(data.lapTimeMs)} — ${track} | GT7 Telemetry`;
-  const description = `${car} lap at ${track}, captured with GT7 Telemetry. Track your own Gran Turismo 7 laps with live telemetry and AI coaching.`;
+  const title = `${formatLapTime(data.lapTimeMs)} — ${track} | fclan`;
+  const description = `${car} lap at ${track}, captured with fclan. Track your own Gran Turismo 7 laps with live telemetry and AI coaching.`;
 
   return {
     title,
@@ -242,7 +242,7 @@ export async function generateMetadata({
       title,
       description,
       type: "website",
-      siteName: "GT7 Telemetry",
+      siteName: "fclan",
     },
     twitter: {
       card: "summary",
@@ -274,13 +274,13 @@ export default async function SharedLapPage({
       />
 
       <div className="relative w-full max-w-xl">
-        <div className="overflow-hidden rounded-2xl border border-violet-500/25 bg-zinc-900/70 shadow-[0_0_60px_-15px_rgba(124,58,237,0.45)] backdrop-blur">
+        <div className="overflow-hidden rounded-2xl border border-primary/25 bg-card shadow-[0_0_60px_-15px_rgba(124,58,237,0.45)] backdrop-blur">
           {/* top accent strip */}
-          <div className="h-1 w-full bg-gradient-to-r from-violet-700 via-violet-500 to-violet-700" />
+          <div className="h-1 w-full bg-gradient-to-r from-primary/80 via-primary to-primary/80" />
 
           <div className="space-y-6 p-6 sm:p-8">
             <div className="flex items-center justify-between gap-3">
-              <Badge className="border-violet-500/40 bg-violet-500/15 text-violet-300">
+              <Badge className="border-primary/40 bg-primary/15 text-primary">
                 <Flag />
                 GT7 Telemetry
               </Badge>
@@ -294,17 +294,17 @@ export default async function SharedLapPage({
                 {session.track_name ?? "Unknown track"}
               </h1>
               <p className="mt-2 flex items-center gap-1.5 text-sm text-zinc-400">
-                <Car className="h-4 w-4 text-violet-400" />
+                <Car className="h-4 w-4 text-primary" />
                 {session.car_name ?? "Unknown car"}
               </p>
             </div>
 
             <div className="rounded-xl border border-zinc-800 bg-zinc-950/60 px-5 py-4">
               <p className="flex items-center gap-1.5 text-xs tracking-wider text-zinc-500 uppercase">
-                <Timer className="h-3.5 w-3.5 text-violet-400" />
+                <Timer className="h-3.5 w-3.5 text-primary" />
                 {lapNumber !== null ? `Lap ${lapNumber}` : "Best lap"}
               </p>
-              <p className="mt-1 bg-gradient-to-r from-violet-300 via-violet-400 to-fuchsia-400 bg-clip-text font-mono text-5xl font-bold text-transparent sm:text-6xl">
+              <p className="mt-1 font-mono text-5xl font-bold text-primary sm:text-6xl">
                 {formatLapTime(lapTimeMs)}
               </p>
             </div>
@@ -315,7 +315,7 @@ export default async function SharedLapPage({
             <div className="border-t border-zinc-800 pt-6 text-center">
               <Link
                 href="/signup"
-                className="inline-flex h-10 items-center justify-center rounded-lg bg-violet-600 px-6 text-sm font-semibold text-white transition-colors hover:bg-violet-500 focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:outline-none"
+                className="inline-flex h-10 items-center justify-center rounded-lg bg-primary px-6 text-sm font-semibold text-white transition-colors hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
               >
                 Track your own laps
               </Link>

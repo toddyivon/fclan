@@ -48,7 +48,7 @@ function RaceCard({ race }: { race: DailyRace }) {
     <Card className="h-full">
       <CardHeader>
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-violet-600 font-bold text-white">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary font-bold text-white">
             {race.letter}
           </div>
           <div className="min-w-0">
@@ -89,7 +89,7 @@ function RaceCard({ race }: { race: DailyRace }) {
         <Button
           variant="ghost"
           size="sm"
-          className="text-violet-400 hover:text-violet-300"
+          className="text-primary hover:text-primary"
           render={<Link href={leaderboardHref(race.track)} />}
         >
           <Trophy className="h-3.5 w-3.5" />
@@ -114,11 +114,11 @@ export default async function RacesPage() {
       </div>
 
       {/* Rotation banner */}
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-violet-500/30 bg-violet-600/10 px-4 py-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-primary/30 bg-primary/10 px-4 py-3">
         <p className="text-sm">
-          <CalendarClock className="mr-2 inline h-4 w-4 text-violet-400" />
+          <CalendarClock className="mr-2 inline h-4 w-4 text-primary" />
           Official GT7 weekly rotation — new Daily Races every{" "}
-          <span className="font-medium text-violet-300">Monday at 06:00 UTC</span>.
+          <span className="font-medium text-primary">Monday at 06:00 UTC</span>.
         </p>
         {data?.sourceUpdatedAt && (
           <p className="text-xs text-muted-foreground">
@@ -172,7 +172,7 @@ export default async function RacesPage() {
           </div>
           <p className="mt-6 text-xs text-muted-foreground">
             Already racing this week&apos;s combos? Your lap times still count —{" "}
-            <Link href="/leaderboards" className="text-violet-400 hover:underline">
+            <Link href="/leaderboards" className="text-primary hover:underline">
               browse the leaderboards
             </Link>
             .
@@ -184,8 +184,8 @@ export default async function RacesPage() {
       <Card>
         <CardHeader>
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-violet-600/20">
-              <Timer className="h-5 w-5 text-violet-400" />
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/20">
+              <Timer className="h-5 w-5 text-primary" />
             </div>
             <div>
               <CardTitle>Lap Time Challenge</CardTitle>
@@ -197,12 +197,12 @@ export default async function RacesPage() {
         </CardHeader>
         <CardContent className="flex flex-wrap items-center justify-between gap-3">
           <p className="text-sm text-muted-foreground">
-            <Flag className="mr-2 inline h-4 w-4 text-violet-400" />
+            <Flag className="mr-2 inline h-4 w-4 text-primary" />
             Set a clean lap in-game, then check the official rankings for the current events.
           </p>
           <Button
             size="sm"
-            className="bg-violet-600 text-white hover:bg-violet-500"
+            className="bg-primary text-white hover:bg-primary"
             render={
               <a
                 href="https://www.gran-turismo.com/us/gt7/"

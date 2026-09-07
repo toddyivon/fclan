@@ -51,7 +51,7 @@ const TIER_LABELS: Record<AdminUser["tier"], string> = {
 
 const TIER_BADGE_CLASS: Record<AdminUser["tier"], string> = {
   free: "bg-zinc-500/15 text-zinc-400",
-  pro: "bg-violet-500/15 text-violet-400",
+  pro: "bg-primary/15 text-primary",
   ai_premium: "bg-fuchsia-500/15 text-fuchsia-400",
 };
 
@@ -307,7 +307,7 @@ export function UserTable({ currentUserId }: { currentUserId: string }) {
             </DialogClose>
             <Button
               size="sm"
-              className="bg-violet-600 hover:bg-violet-500 text-white"
+              className="bg-primary hover:bg-primary/90 text-white"
               disabled={roleBusy}
               onClick={confirmRoleChange}
             >

@@ -50,12 +50,12 @@ export function StatsCards() {
         <CardHeader className="pb-2">
           <CardDescription>Total Users</CardDescription>
           <CardTitle className="text-3xl flex items-center gap-2">
-            <Users className="h-5 w-5 text-violet-400" />
+            <Users className="h-5 w-5 text-primary" />
             {fmt(stats?.users.total)}
           </CardTitle>
           <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-xs">
             <span className="text-zinc-400">{fmt(stats?.users.by_tier.free)} free</span>
-            <span className="text-violet-400">{fmt(stats?.users.by_tier.pro)} pro</span>
+            <span className="text-primary">{fmt(stats?.users.by_tier.pro)} pro</span>
             <span className="text-fuchsia-400">{fmt(stats?.users.by_tier.ai_premium)} ai premium</span>
           </div>
         </CardHeader>
@@ -65,7 +65,7 @@ export function StatsCards() {
         <CardHeader className="pb-2">
           <CardDescription>Sessions</CardDescription>
           <CardTitle className="text-3xl flex items-center gap-2">
-            <Server className="h-5 w-5 text-violet-400" />
+            <Server className="h-5 w-5 text-primary" />
             {fmt(stats?.sessions.total)}
           </CardTitle>
           <p className="mt-1 text-xs text-muted-foreground">
@@ -78,7 +78,7 @@ export function StatsCards() {
         <CardHeader className="pb-2">
           <CardDescription>Telemetry Points</CardDescription>
           <CardTitle className="text-3xl flex items-center gap-2">
-            <Database className="h-5 w-5 text-violet-400" />
+            <Database className="h-5 w-5 text-primary" />
             {fmt(stats?.points.total)}
           </CardTitle>
           <p className="mt-1 text-xs text-muted-foreground">total stored</p>
@@ -89,7 +89,7 @@ export function StatsCards() {
         <CardHeader className="pb-2">
           <CardDescription>AI Analyses</CardDescription>
           <CardTitle className="text-3xl flex items-center gap-2">
-            <Brain className="h-5 w-5 text-violet-400" />
+            <Brain className="h-5 w-5 text-primary" />
             {fmt(stats?.analyses.last_30d)}
           </CardTitle>
           <p className="mt-1 text-xs text-muted-foreground">last 30 days</p>
@@ -100,7 +100,7 @@ export function StatsCards() {
         <CardHeader className="pb-2">
           <CardDescription>Active Subscriptions</CardDescription>
           <CardTitle className="text-3xl flex items-center gap-2">
-            <CreditCard className="h-5 w-5 text-violet-400" />
+            <CreditCard className="h-5 w-5 text-primary" />
             {fmt(stats?.subscriptions.active)}
           </CardTitle>
           <p className="mt-1 text-xs text-muted-foreground flex items-center gap-1">

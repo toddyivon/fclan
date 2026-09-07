@@ -227,7 +227,7 @@ function GhostReplayInner({ sessionId, laps }: { sessionId: string; laps: LapOpt
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-base">
-          <Ghost className="h-4 w-4 text-violet-400" />
+          <Ghost className="h-4 w-4 text-primary" />
           Ghost Replay
         </CardTitle>
         <CardDescription>Animated lap vs reference, in adjustable real time</CardDescription>
@@ -301,7 +301,7 @@ function GhostReplayInner({ sessionId, laps }: { sessionId: string; laps: LapOpt
                     key={s}
                     size="xs"
                     variant={speed === s ? "default" : "outline"}
-                    className={speed === s ? "bg-violet-600 hover:bg-violet-500" : undefined}
+                    className={speed === s ? "bg-primary hover:bg-primary/90" : undefined}
                     onClick={() => changeSpeed(s)}
                   >
                     {s}x

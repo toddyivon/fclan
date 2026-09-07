@@ -209,7 +209,7 @@ function LapCompareInner({ sessionId, laps }: { sessionId: string; laps: LapOpti
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-base">
-          <GitCompareArrows className="h-4 w-4 text-violet-400" />
+          <GitCompareArrows className="h-4 w-4 text-primary" />
           Lap Comparison
         </CardTitle>
         <CardDescription>Speed overlay across the lap (% distance)</CardDescription>

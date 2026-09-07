@@ -120,7 +120,7 @@ function FuelStrategyInner({ sessionId, laps }: { sessionId: string; laps: LapOp
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-base">
-          <Fuel className="h-4 w-4 text-violet-400" />
+          <Fuel className="h-4 w-4 text-primary" />
           Fuel Strategy
         </CardTitle>
         <CardDescription>Consumption, range and pit-window prediction</CardDescription>
@@ -199,9 +199,9 @@ function FuelStrategyInner({ sessionId, laps }: { sessionId: string; laps: LapOp
                     : "—"}
                 </p>
               </div>
-              <div className="rounded-lg border border-violet-500/30 bg-violet-500/5 px-3 py-2">
+              <div className="rounded-lg border border-primary/30 bg-primary/5 px-3 py-2">
                 <p className="text-xs text-muted-foreground">Pit window</p>
-                <p className="font-mono font-medium text-violet-400">
+                <p className="font-mono font-medium text-primary">
                   {analysis.pitLap != null ? `lap ~${analysis.pitLap}` : "—"}
                 </p>
               </div>

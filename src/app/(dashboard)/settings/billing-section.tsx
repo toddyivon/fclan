@@ -108,14 +108,14 @@ export function BillingSection({
         <Badge
           className={
             isPaid
-              ? "bg-violet-600 hover:bg-violet-600 text-white"
+              ? "bg-primary hover:bg-primary text-white"
               : "bg-white/10 hover:bg-white/10 text-white"
           }
         >
           {TIER_LABELS[tier] ?? tier}
         </Badge>
         {subscriptionStatus === "trialing" && (
-          <span className="text-xs text-violet-400">Free trial</span>
+          <span className="text-xs text-primary">Free trial</span>
         )}
         {subscriptionStatus === "past_due" && (
           <span className="text-xs text-amber-400">Payment past due</span>
@@ -131,7 +131,7 @@ export function BillingSection({
         </div>
         <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
           <div
-            className="h-full rounded-full bg-violet-600 transition-all"
+            className="h-full rounded-full bg-primary transition-all"
             style={{ width: unlimited ? "100%" : `${pct}%` }}
           />
         </div>
@@ -158,7 +158,7 @@ export function BillingSection({
         {tier === "free" && (
           <>
             <Button
-              className="bg-violet-600 hover:bg-violet-500"
+              className="bg-primary hover:bg-primary"
               disabled={pending !== null}
               onClick={() => go("/api/billing/checkout", { plan: "pro" })}
             >
@@ -167,7 +167,7 @@ export function BillingSection({
             </Button>
             <Button
               variant="outline"
-              className="border-violet-500/40 text-violet-300 hover:bg-violet-600/10"
+              className="border-primary/40 text-primary hover:bg-primary/10"
               disabled={pending !== null}
               onClick={() => go("/api/billing/checkout", { plan: "ai_premium" })}
             >
@@ -178,7 +178,7 @@ export function BillingSection({
         )}
         {tier === "pro" && (
           <Button
-            className="bg-violet-600 hover:bg-violet-500"
+            className="bg-primary hover:bg-primary"
             disabled={pending !== null}
             onClick={() => go("/api/billing/checkout", { plan: "ai_premium" })}
           >

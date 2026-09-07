@@ -55,7 +55,7 @@ export function ProfileSection({
       </div>
       <div className="flex items-center gap-3">
         <Button
-          className="bg-violet-600 hover:bg-violet-500 text-white"
+          className="bg-primary hover:bg-primary text-white"
           disabled={saving}
           onClick={save}
         >

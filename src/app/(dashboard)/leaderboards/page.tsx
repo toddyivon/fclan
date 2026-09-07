@@ -36,7 +36,7 @@ function EmptyState() {
         Finish a lap with the capture app and your best time shows up here.
       </p>
       <Button
-        className="mt-6 bg-violet-600 hover:bg-violet-500"
+        className="mt-6 bg-primary hover:bg-primary"
         render={<Link href="/dashboard" />}
       >
         Go to Dashboard
@@ -74,7 +74,7 @@ export default async function LeaderboardsPage({
         <div>
           <Link
             href="/leaderboards"
-            className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-violet-400"
+            className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-primary"
           >
             <ChevronLeft className="h-4 w-4" />
             All tracks
@@ -104,7 +104,7 @@ export default async function LeaderboardsPage({
                     key={e.id}
                     className={cn(
                       "grid grid-cols-[2.5rem_minmax(0,1.5fr)_6.5rem] items-center gap-2 px-4 py-3 md:grid-cols-[3rem_minmax(0,1.4fr)_7rem_minmax(0,1.2fr)_8rem]",
-                      isMe && "bg-violet-600/10"
+                      isMe && "bg-primary/10"
                     )}
                   >
                     <span
@@ -119,7 +119,7 @@ export default async function LeaderboardsPage({
                     <span className="flex min-w-0 items-center gap-2">
                       <span className="truncate font-medium">{e.driver_name}</span>
                       {isMe && (
-                        <Badge className="bg-violet-600/20 text-violet-300">You</Badge>
+                        <Badge className="bg-primary/20 text-primary">You</Badge>
                       )}
                     </span>
                     <span className="text-right font-mono text-sm tabular-nums">
@@ -136,10 +136,10 @@ export default async function LeaderboardsPage({
               })}
             </div>
             {board.me && board.me.rank > board.entries.length && (
-              <div className="flex items-center justify-between gap-3 border-t border-border bg-violet-600/10 px-4 py-3 text-sm">
+              <div className="flex items-center justify-between gap-3 border-t border-border bg-primary/10 px-4 py-3 text-sm">
                 <span>
                   Your best:{" "}
-                  <span className="font-semibold text-violet-300">
+                  <span className="font-semibold text-primary">
                     #{board.me.rank}
                   </span>
                 </span>
@@ -176,11 +176,11 @@ export default async function LeaderboardsPage({
               href={`/leaderboards?track=${encodeURIComponent(t.track_name)}`}
               className="group"
             >
-              <Card className="transition-colors group-hover:bg-violet-600/5 group-hover:ring-violet-500/60">
+              <Card className="transition-colors group-hover:bg-primary/5 group-hover:ring-primary/60">
                 <CardContent className="flex items-center justify-between gap-3">
                   <div className="min-w-0">
                     <p className="flex items-center gap-2 truncate font-medium">
-                      <Trophy className="h-4 w-4 shrink-0 text-violet-400" />
+                      <Trophy className="h-4 w-4 shrink-0 text-primary" />
                       <span className="truncate">{t.track_name}</span>
                     </p>
                     <p className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
@@ -188,7 +188,7 @@ export default async function LeaderboardsPage({
                       {t.entries} driver{t.entries === 1 ? "" : "s"}
                     </p>
                   </div>
-                  <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground transition-colors group-hover:text-violet-400" />
+                  <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground transition-colors group-hover:text-primary" />
                 </CardContent>
               </Card>
             </Link>

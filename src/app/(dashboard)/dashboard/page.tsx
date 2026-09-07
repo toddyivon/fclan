@@ -155,7 +155,7 @@ export default async function DashboardPage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Trophy className="h-5 w-5 text-violet-400" />
+              <Trophy className="h-5 w-5 text-primary" />
               Recent Sessions
             </CardTitle>
             <CardDescription>Your latest driving sessions.</CardDescription>
@@ -173,7 +173,7 @@ export default async function DashboardPage() {
                   <Link
                     key={s.id}
                     href={`/sessions/${s.id}`}
-                    className="group -mx-2 flex items-center justify-between gap-3 rounded-lg px-2 py-3 transition-colors hover:bg-violet-600/10"
+                    className="group -mx-2 flex items-center justify-between gap-3 rounded-lg px-2 py-3 transition-colors hover:bg-primary/10"
                   >
                     <div className="min-w-0">
                       <p className="truncate text-sm font-medium">
@@ -201,13 +201,13 @@ export default async function DashboardPage() {
                           {s.total_laps ?? 0} laps
                         </p>
                       </div>
-                      <ChevronRight className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-violet-400" />
+                      <ChevronRight className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-primary" />
                     </div>
                   </Link>
                 ))}
                 <Link
                   href="/sessions"
-                  className="block pt-3 text-center text-xs text-violet-400 transition-colors hover:text-violet-300"
+                  className="block pt-3 text-center text-xs text-primary transition-colors hover:text-primary"
                 >
                   View all sessions
                 </Link>

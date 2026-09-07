@@ -60,12 +60,12 @@ function SignupForm() {
     return (
       <Card className="w-full max-w-md relative z-10 bg-white/5 border-white/10 backdrop-blur-sm">
         <CardHeader className="text-center">
-          <div className="mx-auto h-10 w-10 rounded-xl bg-violet-600 flex items-center justify-center mb-4">
+          <div className="mx-auto h-10 w-10 rounded-xl bg-primary flex items-center justify-center mb-4">
             <MailCheck className="h-6 w-6 text-white" />
           </div>
           <CardTitle className="text-2xl">Check your email</CardTitle>
           <CardDescription>
-            We sent a confirmation link to <span className="text-violet-400">{email}</span>. Click it to activate
+            We sent a confirmation link to <span className="text-primary">{email}</span>. Click it to activate
             your account.
           </CardDescription>
         </CardHeader>
@@ -81,13 +81,13 @@ function SignupForm() {
   return (
     <Card className="w-full max-w-md relative z-10 bg-white/5 border-white/10 backdrop-blur-sm">
       <CardHeader className="text-center">
-        <div className="mx-auto h-10 w-10 rounded-xl bg-violet-600 flex items-center justify-center mb-4">
+        <div className="mx-auto h-10 w-10 rounded-xl bg-primary flex items-center justify-center mb-4">
           <Gauge className="h-6 w-6 text-white" />
         </div>
         <CardTitle className="text-2xl">Create Account</CardTitle>
         <CardDescription>
           Already have an account?{" "}
-          <Link href="/login" className="text-violet-400 hover:underline">
+          <Link href="/login" className="text-primary hover:underline">
             Sign in
           </Link>
         </CardDescription>
@@ -111,7 +111,7 @@ function SignupForm() {
             <Label htmlFor="password">Password</Label>
             <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={8} className="bg-white/5" />
           </div>
-          <Button type="submit" className="w-full bg-violet-600 hover:bg-violet-500" disabled={loading}>
+          <Button type="submit" className="w-full bg-primary hover:bg-primary" disabled={loading}>
             {loading ? "Creating Account..." : "Create Account"}
           </Button>
         </CardContent>
@@ -128,7 +128,7 @@ function SignupForm() {
 export default function SignupPage() {
   return (
     <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center px-4">
-      <div className="absolute inset-0 bg-gradient-to-b from-violet-600/5 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
       <Suspense fallback={null}>
         <SignupForm />
       </Suspense>

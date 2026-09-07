@@ -143,7 +143,7 @@ export async function LeaderboardWidget({ userId }: { userId: string }) {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Trophy className="h-5 w-5 text-violet-400" />
+          <Trophy className="h-5 w-5 text-primary" />
           Community Leaderboard
         </CardTitle>
         <CardDescription>
@@ -168,7 +168,7 @@ export async function LeaderboardWidget({ userId }: { userId: string }) {
                   key={e.id}
                   className={cn(
                     "-mx-2 flex items-center justify-between gap-3 rounded-lg px-2 py-2.5",
-                    isMe && "bg-violet-600/10"
+                    isMe && "bg-primary/10"
                   )}
                 >
                   <div className="flex min-w-0 items-center gap-3">
@@ -182,7 +182,7 @@ export async function LeaderboardWidget({ userId }: { userId: string }) {
                     </span>
                     <span className="truncate text-sm font-medium">{e.driver_name}</span>
                     {isMe && (
-                      <Badge className="bg-violet-600/20 text-violet-300">You</Badge>
+                      <Badge className="bg-primary/20 text-primary">You</Badge>
                     )}
                   </div>
                   <span className="shrink-0 font-mono text-sm tabular-nums">
@@ -195,7 +195,7 @@ export async function LeaderboardWidget({ userId }: { userId: string }) {
               <div className="-mx-2 flex items-center justify-between gap-3 px-2 py-2.5 text-sm">
                 <span className="text-muted-foreground">
                   Your best:{" "}
-                  <span className="font-semibold text-violet-300">#{board.me.rank}</span>
+                  <span className="font-semibold text-primary">#{board.me.rank}</span>
                 </span>
                 <span className="font-mono tabular-nums">
                   {formatLapTime(board.me.lap_time_ms)}
@@ -206,7 +206,7 @@ export async function LeaderboardWidget({ userId }: { userId: string }) {
         )}
         <Link
           href="/leaderboards"
-          className="block pt-3 text-center text-xs text-violet-400 transition-colors hover:text-violet-300"
+          className="block pt-3 text-center text-xs text-primary transition-colors hover:text-primary"
         >
           View leaderboards
         </Link>

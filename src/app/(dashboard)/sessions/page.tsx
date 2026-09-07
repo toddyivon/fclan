@@ -62,13 +62,13 @@ export default async function SessionsPage({
       </div>
 
       {tier === "free" && (
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-violet-500/30 bg-violet-600/10 px-4 py-3">
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-primary/30 bg-primary/10 px-4 py-3">
           <p className="text-sm">
-            <Sparkles className="mr-2 inline h-4 w-4 text-violet-400" />
-            Free keeps <span className="font-medium text-violet-300">7 days</span> of session
+            <Sparkles className="mr-2 inline h-4 w-4 text-primary" />
+            Free keeps <span className="font-medium text-primary">7 days</span> of session
             history — upgrade to Pro for unlimited history, AI analysis and exports.
           </p>
-          <Button size="sm" className="bg-violet-600 hover:bg-violet-500" render={<Link href="/settings" />}>
+          <Button size="sm" className="bg-primary hover:bg-primary" render={<Link href="/settings" />}>
             Upgrade
           </Button>
         </div>
@@ -90,7 +90,7 @@ export default async function SessionsPage({
               <p className="mt-2 text-sm">
                 Start capturing telemetry with the mobile app — drive a lap and it shows up here.
               </p>
-              <Button className="mt-6 bg-violet-600 hover:bg-violet-500" render={<Link href="/dashboard" />}>
+              <Button className="mt-6 bg-primary hover:bg-primary" render={<Link href="/dashboard" />}>
                 <Smartphone className="mr-2 h-4 w-4" />
                 Get the Mobile App
               </Button>

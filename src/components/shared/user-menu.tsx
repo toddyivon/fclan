@@ -30,7 +30,7 @@ export function UserMenu({
     <div className="flex items-center justify-between gap-2">
       {!compact && (
         <div className="flex min-w-0 items-center gap-3">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-violet-600 text-sm font-medium text-white">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-medium text-white">
             {displayName[0].toUpperCase()}
           </div>
           <div className="min-w-0 text-sm">

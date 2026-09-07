@@ -41,13 +41,13 @@ function LoginForm() {
   return (
     <Card className="w-full max-w-md relative z-10 bg-white/5 border-white/10 backdrop-blur-sm">
       <CardHeader className="text-center">
-        <div className="mx-auto h-10 w-10 rounded-xl bg-violet-600 flex items-center justify-center mb-4">
+        <div className="mx-auto h-10 w-10 rounded-xl bg-primary flex items-center justify-center mb-4">
           <Gauge className="h-6 w-6 text-white" />
         </div>
         <CardTitle className="text-2xl">Sign In</CardTitle>
         <CardDescription>
           Don&apos;t have an account?{" "}
-          <Link href="/signup" className="text-violet-400 hover:underline">
+          <Link href="/signup" className="text-primary hover:underline">
             Sign up
           </Link>
         </CardDescription>
@@ -74,7 +74,7 @@ function LoginForm() {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label htmlFor="password">Password</Label>
-              <Link href="/forgot-password" className="text-xs text-violet-400 hover:underline">
+              <Link href="/forgot-password" className="text-xs text-primary hover:underline">
                 Forgot password?
               </Link>
             </div>
@@ -87,7 +87,7 @@ function LoginForm() {
               className="bg-white/5"
             />
           </div>
-          <Button type="submit" className="w-full bg-violet-600 hover:bg-violet-500" disabled={loading}>
+          <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={loading}>
             {loading ? "Signing in..." : "Sign In"}
           </Button>
         </CardContent>
@@ -104,7 +104,7 @@ function LoginForm() {
 export default function LoginPage() {
   return (
     <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center px-4">
-      <div className="absolute inset-0 bg-gradient-to-b from-violet-600/5 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
       <Suspense fallback={null}>
         <LoginForm />
       </Suspense>

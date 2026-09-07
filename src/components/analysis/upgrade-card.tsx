@@ -13,18 +13,18 @@ const PERKS = [
 
 export function UpgradeCard() {
   return (
-    <Card className="relative overflow-hidden border-violet-500/30 ring-violet-500/30">
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-violet-600/15 via-transparent to-fuchsia-600/10" />
+    <Card className="relative overflow-hidden border-primary/30 ring-primary/30">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/15 via-transparent to-fuchsia-600/10" />
       <CardContent className="relative py-6">
         <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-violet-600/20 ring-1 ring-violet-500/40">
-            <Lock className="h-6 w-6 text-violet-400" />
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/20 ring-1 ring-primary/40">
+            <Lock className="h-6 w-6 text-primary" />
           </div>
           <div className="flex-1 space-y-3">
             <div>
               <h3 className="flex items-center gap-2 text-lg font-semibold">
                 Unlock AI Race Coaching
-                <Sparkles className="h-4 w-4 text-violet-400" />
+                <Sparkles className="h-4 w-4 text-primary" />
               </h3>
               <p className="text-sm text-muted-foreground mt-1">
                 AI lap analysis is available on Pro and AI Premium plans.
@@ -33,14 +33,14 @@ export function UpgradeCard() {
             <ul className="space-y-1.5">
               {PERKS.map(({ icon: Icon, text }) => (
                 <li key={text} className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <Icon className="mt-0.5 h-4 w-4 shrink-0 text-violet-400" />
+                  <Icon className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                   <span>{text}</span>
                 </li>
               ))}
             </ul>
           </div>
           <Link href="/settings" className="shrink-0">
-            <Button className="bg-violet-600 hover:bg-violet-500">
+            <Button className="bg-primary hover:bg-primary/90">
               Upgrade plan <ChevronRight className="ml-1 h-4 w-4" />
             </Button>
           </Link>

@@ -48,10 +48,10 @@ export default async function DashboardLayout({
         {/* Logo */}
         <div className="p-6 border-b border-border">
           <Link href="/dashboard" className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-violet-600 flex items-center justify-center">
+            <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
               <Gauge className="h-5 w-5 text-white" />
             </div>
-            <span className="font-bold text-lg">GT7 Telemetry</span>
+            <span className="font-bold text-lg">fclan</span>
           </Link>
         </div>
 
@@ -71,10 +71,10 @@ export default async function DashboardLayout({
         {/* Mobile top bar */}
         <header className="md:hidden border-b border-border bg-card px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="h-7 w-7 rounded-lg bg-violet-600 flex items-center justify-center">
+            <div className="h-7 w-7 rounded-lg bg-primary flex items-center justify-center">
               <Gauge className="h-4 w-4 text-white" />
             </div>
-            <span className="font-bold">GT7</span>
+            <span className="font-bold">fclan</span>
           </div>
           <div className="flex items-center gap-2">
             <Badge variant="secondary">{tierLabel}</Badge>

@@ -36,9 +36,14 @@ export function NavLinks({
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   if (variant === "mobile") {
+    // On mobile, show only the 4 primary destinations (Settings lives in the
+    // user menu). Races/Admin stay desktop-only for glanceability.
+    const primary = items.filter((i) =>
+      ["overview", "sessions", "analysis", "leaderboards"].includes(i.icon)
+    );
     return (
       <>
-        {items.map((item) => {
+        {primary.map((item) => {
           const Icon = ICONS[item.icon];
           const active = isActive(item.href);
           return (
@@ -47,12 +52,12 @@ export function NavLinks({
               href={item.href}
               aria-current={active ? "page" : undefined}
               className={cn(
-                "flex flex-col items-center gap-1 py-1 px-3 transition-colors",
-                active ? "text-violet-400" : "text-muted-foreground hover:text-violet-400"
+                "flex flex-col items-center gap-1 py-1 px-4 transition-colors",
+                active ? "text-primary" : "text-muted-foreground hover:text-primary"
               )}
             >
               <Icon className="h-5 w-5" />
-              <span className="text-[10px]">{item.label}</span>
+              <span className="text-[11px]">{item.label}</span>
             </Link>
           );
         })}
@@ -73,7 +78,7 @@ export function NavLinks({
             className={cn(
               "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors",
               active
-                ? "bg-violet-600/15 text-violet-300 font-medium"
+                ? "bg-primary/15 text-primary font-medium"
                 : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
             )}
           >

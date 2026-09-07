@@ -76,7 +76,7 @@ export function ApiKeysSection() {
       {error && <p className="text-sm text-destructive">{error}</p>}
 
       {justCreated && (
-        <div className="bg-violet-600/10 border border-violet-600/30 rounded-lg p-4 space-y-2">
+        <div className="bg-primary/10 border border-primary/30 rounded-lg p-4 space-y-2">
           <p className="text-sm font-medium">Copy this key now — it will not be shown again.</p>
           <code className="block bg-black/40 p-2 rounded text-xs break-all">{justCreated}</code>
           <Button size="sm" variant="outline" onClick={() => setJustCreated(null)}>Done</Button>
@@ -88,7 +88,7 @@ export function ApiKeysSection() {
           <Label htmlFor="key-name">Key name</Label>
           <Input id="key-name" placeholder="Mobile app" value={newName} onChange={(e) => setNewName(e.target.value)} />
         </div>
-        <Button className="bg-violet-600 hover:bg-violet-500" disabled={creating} onClick={create}>
+        <Button className="bg-primary hover:bg-primary" disabled={creating} onClick={create}>
           {creating ? "Creating…" : "Generate"}
         </Button>
       </div>

@@ -27,10 +27,10 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center px-4">
-      <div className="absolute inset-0 bg-gradient-to-b from-violet-600/5 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
       <Card className="w-full max-w-md relative z-10 bg-white/5 border-white/10 backdrop-blur-sm">
         <CardHeader className="text-center">
-          <div className="mx-auto h-10 w-10 rounded-xl bg-violet-600 flex items-center justify-center mb-4">
+          <div className="mx-auto h-10 w-10 rounded-xl bg-primary flex items-center justify-center mb-4">
             {sent ? <MailCheck className="h-6 w-6 text-white" /> : <KeyRound className="h-6 w-6 text-white" />}
           </div>
           <CardTitle className="text-2xl">{sent ? "Check your email" : "Reset Password"}</CardTitle>
@@ -55,7 +55,7 @@ export default function ForgotPasswordPage() {
                   className="bg-white/5"
                 />
               </div>
-              <Button type="submit" className="w-full bg-violet-600 hover:bg-violet-500" disabled={loading}>
+              <Button type="submit" className="w-full bg-primary hover:bg-primary" disabled={loading}>
                 {loading ? "Sending..." : "Send Reset Link"}
               </Button>
             </CardContent>

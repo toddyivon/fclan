@@ -48,11 +48,11 @@ export function SessionHeader({ session, isLive, canExport }: SessionHeaderProps
           </div>
           <p className="text-muted-foreground mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
             <span className="inline-flex items-center gap-1.5">
-              <Car className="h-4 w-4 text-violet-400" />
+              <Car className="h-4 w-4 text-primary" />
               {session.car_name ?? "Unknown car"}
             </span>
             <span className="inline-flex items-center gap-1.5">
-              <MapPin className="h-4 w-4 text-violet-400" />
+              <MapPin className="h-4 w-4 text-primary" />
               {startedAt.toLocaleString("en-US", {
                 dateStyle: "medium",
                 timeStyle: "short",

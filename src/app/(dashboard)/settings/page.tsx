@@ -54,7 +54,7 @@ export default async function SettingsPage() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <User className="h-5 w-5 text-violet-400" />
+            <User className="h-5 w-5 text-primary" />
             Profile
           </CardTitle>
         </CardHeader>
@@ -71,7 +71,7 @@ export default async function SettingsPage() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <CreditCard className="h-5 w-5 text-violet-400" />
+            <CreditCard className="h-5 w-5 text-primary" />
             Plan &amp; Billing
           </CardTitle>
           <CardDescription>Your subscription, AI analysis quota, and payment details.</CardDescription>
@@ -95,7 +95,7 @@ export default async function SettingsPage() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Key className="h-5 w-5 text-violet-400" />
+            <Key className="h-5 w-5 text-primary" />
             API Keys
           </CardTitle>
           <CardDescription>Keys used to authenticate the mobile capture app.</CardDescription>

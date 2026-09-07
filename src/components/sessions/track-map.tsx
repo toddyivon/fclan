@@ -255,17 +255,17 @@ export function LockedFeatureCard({
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col items-center justify-center gap-3 rounded-lg border border-dashed border-violet-500/30 bg-violet-500/5 px-6 py-10 text-center">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-600/20 ring-1 ring-violet-500/40">
-            <Lock className="h-5 w-5 text-violet-400" />
+        <div className="flex flex-col items-center justify-center gap-3 rounded-lg border border-dashed border-primary/30 bg-primary/5 px-6 py-10 text-center">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/20 ring-1 ring-primary/40">
+            <Lock className="h-5 w-5 text-primary" />
           </div>
           <p className="text-sm text-muted-foreground">
             {title} is available on the{" "}
-            <span className="font-medium text-violet-400">{requiredTier}</span> plan.
+            <span className="font-medium text-primary">{requiredTier}</span> plan.
           </p>
           <Button
             size="sm"
-            className="bg-violet-600 hover:bg-violet-500"
+            className="bg-primary hover:bg-primary/90"
             render={<Link href="/settings" />}
           >
             Upgrade plan
@@ -355,7 +355,7 @@ function TrackMapInner({ sessionId, laps }: { sessionId: string; laps: LapOption
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-base">
-          <Map className="h-4 w-4 text-violet-400" />
+          <Map className="h-4 w-4 text-primary" />
           Track Map
         </CardTitle>
         <CardDescription>Racing line colored by speed</CardDescription>
@@ -424,7 +424,7 @@ function TrackMapInner({ sessionId, laps }: { sessionId: string; laps: LapOption
             </svg>
             {hover && (
               <div
-                className="pointer-events-none absolute z-10 rounded-md border border-violet-500/40 bg-popover px-2 py-1 font-mono text-xs text-popover-foreground shadow-md"
+                className="pointer-events-none absolute z-10 rounded-md border border-primary/40 bg-popover px-2 py-1 font-mono text-xs text-popover-foreground shadow-md"
                 style={{
                   left: hover.left,
                   top: hover.top,

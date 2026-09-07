@@ -53,7 +53,7 @@ export default function ResetPasswordPage() {
 
   return (
     <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center px-4">
-      <div className="absolute inset-0 bg-gradient-to-b from-violet-600/5 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
       <Card className="w-full max-w-md relative z-10 bg-white/5 border-white/10 backdrop-blur-sm">
         {status === "checking" && (
           <CardHeader className="text-center">
@@ -65,7 +65,7 @@ export default function ResetPasswordPage() {
         {status === "expired" && (
           <>
             <CardHeader className="text-center">
-              <div className="mx-auto h-10 w-10 rounded-xl bg-violet-600 flex items-center justify-center mb-4">
+              <div className="mx-auto h-10 w-10 rounded-xl bg-primary flex items-center justify-center mb-4">
                 <ShieldAlert className="h-6 w-6 text-white" />
               </div>
               <CardTitle className="text-2xl">Link expired</CardTitle>
@@ -75,7 +75,7 @@ export default function ResetPasswordPage() {
             </CardHeader>
             <CardContent className="space-y-2">
               <Link href="/forgot-password" className="block">
-                <Button className="w-full bg-violet-600 hover:bg-violet-500">Request New Link</Button>
+                <Button className="w-full bg-primary hover:bg-primary">Request New Link</Button>
               </Link>
               <Link href="/login" className="block">
                 <Button variant="ghost" className="w-full">
@@ -89,7 +89,7 @@ export default function ResetPasswordPage() {
         {status === "ready" && (
           <>
             <CardHeader className="text-center">
-              <div className="mx-auto h-10 w-10 rounded-xl bg-violet-600 flex items-center justify-center mb-4">
+              <div className="mx-auto h-10 w-10 rounded-xl bg-primary flex items-center justify-center mb-4">
                 <LockKeyhole className="h-6 w-6 text-white" />
               </div>
               <CardTitle className="text-2xl">Set New Password</CardTitle>
@@ -126,7 +126,7 @@ export default function ResetPasswordPage() {
                     className="bg-white/5"
                   />
                 </div>
-                <Button type="submit" className="w-full bg-violet-600 hover:bg-violet-500" disabled={loading}>
+                <Button type="submit" className="w-full bg-primary hover:bg-primary" disabled={loading}>
                   {loading ? "Updating..." : "Update Password"}
                 </Button>
               </CardContent>
@@ -141,7 +141,7 @@ export default function ResetPasswordPage() {
 
         {status === "done" && (
           <CardHeader className="text-center">
-            <div className="mx-auto h-10 w-10 rounded-xl bg-violet-600 flex items-center justify-center mb-4">
+            <div className="mx-auto h-10 w-10 rounded-xl bg-primary flex items-center justify-center mb-4">
               <CheckCircle2 className="h-6 w-6 text-white" />
             </div>
             <CardTitle className="text-2xl">Password updated</CardTitle>

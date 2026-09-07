@@ -278,11 +278,11 @@ export function LiveTelemetry({
   const currentLap = point?.lap_number ?? lapState.currentLap;
 
   return (
-    <Card className="border-violet-500/30">
+    <Card className="border-primary/30">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <span className="relative flex h-5 w-5 items-center justify-center">
-            <Radio className="h-5 w-5 text-violet-400" />
+            <Radio className="h-5 w-5 text-primary" />
             {connStatus === "live" && (
               <span className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
             )}
@@ -305,7 +305,7 @@ export function LiveTelemetry({
           ) : connStatus === "connecting" ? (
             <Badge
               variant="outline"
-              className="border-violet-500/40 bg-violet-600/10 text-violet-400"
+              className="border-primary/40 bg-primary/10 text-primary"
             >
               CONNECTING
             </Badge>
@@ -342,14 +342,14 @@ export function LiveTelemetry({
                 <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
                   Sug
                 </p>
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-600/20 font-mono text-xl font-bold text-violet-300 ring-1 ring-violet-500/40 animate-pulse">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/20 font-mono text-xl font-bold text-primary ring-1 ring-primary/40 animate-pulse">
                   {gearLabel(suggested)}
                 </div>
               </div>
             )}
             <div className="text-center">
               <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Gear</p>
-              <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-violet-600 font-mono text-3xl font-bold text-white shadow-lg shadow-violet-600/30">
+              <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-primary font-mono text-3xl font-bold text-white shadow-lg shadow-primary/30">
                 {gearLabel(gear)}
               </div>
             </div>
@@ -364,7 +364,7 @@ export function LiveTelemetry({
           </div>
           <div className="h-3 overflow-hidden rounded-full bg-muted/60 ring-1 ring-foreground/10">
             <motion.div
-              className="h-full rounded-full bg-gradient-to-r from-violet-600 via-fuchsia-500 to-red-500"
+              className="h-full rounded-full bg-gradient-to-r from-primary/60 via-fuchsia-500 to-red-500"
               animate={{ width: `${rpmPct}%` }}
               transition={{ duration: 0.12, ease: "linear" }}
             />
@@ -415,7 +415,7 @@ export function LiveTelemetry({
             </div>
             <div className="flex items-baseline gap-2 text-muted-foreground">
               <span className="text-[10px] uppercase tracking-wider">Best</span>
-              <span className="font-mono tabular-nums text-violet-400">
+              <span className="font-mono tabular-nums text-primary">
                 {formatLapTime(lapState.bestLapMs)}
               </span>
             </div>
@@ -424,7 +424,7 @@ export function LiveTelemetry({
                 <Fuel className="h-3.5 w-3.5 text-muted-foreground" />
                 <div className="h-1.5 w-20 overflow-hidden rounded-full bg-muted/60">
                   <motion.div
-                    className={`h-full rounded-full ${fuelPct <= 15 ? "bg-red-500" : "bg-violet-500"}`}
+                    className={`h-full rounded-full ${fuelPct <= 15 ? "bg-red-500" : "bg-primary"}`}
                     animate={{ width: `${fuelPct}%` }}
                     transition={{ duration: 0.2, ease: "linear" }}
                   />
@@ -471,16 +471,16 @@ export function LiveTelemetry({
 function SetupCard() {
   const steps = [
     "Connect your phone to the same WiFi as your PlayStation",
-    "Open the GT7 Telemetry app on your phone",
+    "Open the fclan app on your phone",
     "Enter your PS5 IP address and API key, then press Start",
     "Start GT7 with Simulator Interface enabled in Settings",
   ];
 
   return (
-    <Card className="border-violet-500/30">
+    <Card className="border-primary/30">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Smartphone className="h-5 w-5 text-violet-400" />
+          <Smartphone className="h-5 w-5 text-primary" />
           Start Capturing
         </CardTitle>
         <CardDescription>
@@ -495,7 +495,7 @@ function SetupCard() {
               <div key={step} className="flex items-start gap-2">
                 <Badge
                   variant="outline"
-                  className="shrink-0 border-violet-500/40 bg-violet-600/20 text-violet-400"
+                  className="shrink-0 border-primary/40 bg-primary/20 text-primary"
                 >
                   {i + 1}
                 </Badge>
@@ -504,7 +504,7 @@ function SetupCard() {
             ))}
           </div>
           <Link href="/settings" className="block">
-            <Button className="w-full bg-violet-600 hover:bg-violet-500">
+            <Button className="w-full bg-primary hover:bg-primary/90">
               <KeyRound className="mr-2 h-4 w-4" />
               Set up capture
             </Button>

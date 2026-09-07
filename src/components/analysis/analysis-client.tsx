@@ -306,15 +306,15 @@ export function AnalysisClient() {
       {/* Quota meter */}
       {quota && !isFreeTier && (
         <div className="flex flex-wrap items-center gap-3 rounded-lg border border-border/60 bg-muted/20 px-4 py-2.5">
-          <Gauge className="h-4 w-4 text-violet-400" />
+          <Gauge className="h-4 w-4 text-primary" />
           <span className="text-sm">
             AI analyses this month:{" "}
-            <span className="font-semibold text-violet-300">
+            <span className="font-semibold text-primary">
               {quota.used}
               {quota.limit < UNLIMITED_THRESHOLD ? ` / ${quota.limit}` : ""}
             </span>
             {quota.limit >= UNLIMITED_THRESHOLD && (
-              <Badge variant="secondary" className="ml-2 bg-violet-600/15 text-violet-300">
+              <Badge variant="secondary" className="ml-2 bg-primary/15 text-primary">
                 Unlimited
               </Badge>
             )}
@@ -331,7 +331,7 @@ export function AnalysisClient() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Brain className="h-5 w-5 text-violet-400" />
+              <Brain className="h-5 w-5 text-primary" />
               Analyze Your Laps
             </CardTitle>
             <CardDescription>
@@ -400,7 +400,7 @@ export function AnalysisClient() {
             </div>
 
             <Button
-              className="bg-violet-600 hover:bg-violet-500"
+              className="bg-primary hover:bg-primary"
               disabled={!selectedSession || streaming}
               onClick={runAnalysis}
             >
@@ -456,12 +456,12 @@ export function AnalysisClient() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.25 }}
         >
-          <Card className="border-violet-500/20 ring-violet-500/20">
+          <Card className="border-primary/20 ring-primary/20">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Brain className="h-4 w-4 text-violet-400" />
+                <Brain className="h-4 w-4 text-primary" />
                 AI Race Coach
-                <Badge variant="secondary" className="ml-1 bg-violet-600/15 text-violet-300">
+                <Badge variant="secondary" className="ml-1 bg-primary/15 text-primary">
                   gpt-4o-mini
                 </Badge>
               </CardTitle>
@@ -471,12 +471,12 @@ export function AnalysisClient() {
                 <p className="text-sm leading-relaxed whitespace-pre-wrap text-foreground/90">
                   {streamedText}
                   {streaming && (
-                    <span className="ml-0.5 inline-block h-4 w-2 animate-pulse rounded-sm bg-violet-400 align-text-bottom" />
+                    <span className="ml-0.5 inline-block h-4 w-2 animate-pulse rounded-sm bg-primary align-text-bottom" />
                   )}
                 </p>
               ) : (
                 <div className="flex items-center gap-2 py-4 text-sm text-muted-foreground">
-                  <Loader2 className="h-4 w-4 animate-spin text-violet-400" />
+                  <Loader2 className="h-4 w-4 animate-spin text-primary" />
                   Reviewing your telemetry…
                 </div>
               )}

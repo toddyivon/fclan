@@ -20,7 +20,7 @@ export default function DashboardError({
       <p className="text-sm text-muted-foreground">
         {error.message || "An unexpected error occurred."}
       </p>
-      <Button onClick={reset} className="bg-violet-600 hover:bg-violet-500">
+      <Button onClick={reset} className="bg-primary hover:bg-primary">
         Try again
       </Button>
     </div>

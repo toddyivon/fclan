@@ -94,7 +94,7 @@ export default function LandingPage() {
       >
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <motion.div className="flex items-center gap-2" whileHover={{ scale: 1.05 }}>
-            <div className="h-8 w-8 rounded-lg bg-violet-600 flex items-center justify-center">
+            <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
               <Gauge className="h-5 w-5" />
             </div>
             <span className="font-bold text-xl tracking-tight">fclan</span>
@@ -104,7 +104,7 @@ export default function LandingPage() {
             <Link href="#pricing" className="hover:text-white transition-colors">Pricing</Link>
             <Link href="/login" className="hover:text-white transition-colors">Sign In</Link>
             <Link href="/signup">
-              <Button size="sm" className="bg-violet-600 hover:bg-violet-500">
+              <Button size="sm" className="bg-primary hover:bg-primary/90">
                 Get Started
               </Button>
             </Link>
@@ -131,7 +131,7 @@ export default function LandingPage() {
               Sign In
             </Link>
             <Link href="/signup" onClick={() => setMobileOpen(false)}>
-              <Button size="sm" className="w-full bg-violet-600 hover:bg-violet-500">
+              <Button size="sm" className="w-full bg-primary hover:bg-primary/90">
                 Get Started
               </Button>
             </Link>
@@ -141,19 +141,19 @@ export default function LandingPage() {
 
       {/* Hero */}
       <section className="relative overflow-hidden pt-32 pb-20 md:pt-44 md:pb-32 px-6">
-        <div className="absolute inset-0 bg-gradient-to-b from-violet-600/10 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-transparent" />
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="relative mx-auto max-w-4xl text-center"
         >
-          <Badge variant="outline" className="mb-6 border-violet-500/40 text-violet-400 px-4 py-1">
-            Now with AI-Powered Coaching
+          <Badge variant="outline" className="mb-6 border-primary/40 text-primary px-4 py-1">
+            Live telemetry capture — 60Hz from your PS5
           </Badge>
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1]">
             Drive Faster with{" "}
-            <span className="bg-gradient-to-r from-violet-400 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-primary">
               fclan
             </span>
           </h1>
@@ -162,7 +162,7 @@ export default function LandingPage() {
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/signup">
-              <Button size="lg" className="bg-violet-600 hover:bg-violet-500 text-base px-8 h-12 animate-pulse-glow">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-base px-8 h-12 animate-pulse-glow">
                 Start Free <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
@@ -171,6 +171,12 @@ export default function LandingPage() {
                 View Pricing
               </Button>
             </Link>
+          </div>
+          <div className="mt-14 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-sm text-white/50">
+            <span><span className="font-mono tabular-nums text-primary">60Hz</span> capture rate</span>
+            <span><span className="font-mono tabular-nums text-primary">20ms</span> packet latency</span>
+            <span><span className="font-mono tabular-nums text-primary">3</span> tracks analyzed</span>
+            <span><span className="font-mono tabular-nums text-primary">AI</span> coaching every lap</span>
           </div>
         </motion.div>
       </section>
@@ -192,10 +198,10 @@ export default function LandingPage() {
         >
           {features.map((f, i) => (
             <motion.div key={i} variants={fadeInUp}>
-              <Card className="bg-white/5 border-white/10 hover:border-violet-500/40 transition-all duration-300 h-full">
+              <Card className="bg-white/5 border-white/10 hover:border-primary/40 transition-all duration-300 h-full">
                 <CardContent className="pt-6">
-                  <div className="h-12 w-12 rounded-xl bg-violet-600/20 flex items-center justify-center mb-4">
-                    <f.icon className="h-6 w-6 text-violet-400" />
+                  <div className="h-12 w-12 rounded-xl bg-primary/20 flex items-center justify-center mb-4">
+                    <f.icon className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
                   <p className="text-white/60 text-sm leading-relaxed">{f.description}</p>
@@ -228,13 +234,13 @@ export default function LandingPage() {
               <Card
                 className={`h-full relative transition-all duration-300 ${
                   t.highlighted
-                    ? "border-violet-500 shadow-lg shadow-violet-500/20 bg-gradient-to-b from-violet-600/10 to-[#0A0A0A]"
+                    ? "border-primary shadow-lg shadow-primary/20 bg-primary/10"
                     : "bg-white/5 border-white/10"
                 }`}
               >
                 {t.highlighted && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <Badge className="bg-violet-600 hover:bg-violet-600">
+                    <Badge className="bg-primary hover:bg-primary/90">
                       <Star className="inline h-3 w-3 mr-1" /> Recommended
                     </Badge>
                   </div>
@@ -249,12 +255,12 @@ export default function LandingPage() {
                     {t.period && <span className="text-white/60">{t.period}</span>}
                   </div>
                   {t.trial && (
-                    <p className="text-xs text-violet-400 mb-6">7-day free trial — cancel anytime</p>
+                    <p className="text-xs text-primary mb-6">7-day free trial — cancel anytime</p>
                   )}
                   <ul className="space-y-3">
                     {t.features.map((f, j) => (
                       <li key={j} className="flex items-start gap-2 text-sm">
-                        <svg className="h-4 w-4 mt-0.5 shrink-0 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="h-4 w-4 mt-0.5 shrink-0 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
                         <span className={t.highlighted ? "text-white/80" : "text-white/60"}>{f}</span>
@@ -265,7 +271,7 @@ export default function LandingPage() {
                 <CardFooter>
                   <Link href={t.href} className="w-full">
                     <Button
-                      className={`w-full ${t.highlighted ? "bg-violet-600 hover:bg-violet-500" : "bg-white/10 hover:bg-white/20 text-white"}`}
+                      className={`w-full ${t.highlighted ? "bg-primary hover:bg-primary/90" : "bg-white/10 hover:bg-white/20 text-white"}`}
                     >
                       {t.cta}
                     </Button>
@@ -283,14 +289,14 @@ export default function LandingPage() {
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="mx-auto max-w-3xl text-center rounded-2xl border border-violet-500/30 bg-gradient-to-b from-violet-600/20 to-transparent p-12 md:p-16"
+          className="mx-auto max-w-3xl text-center rounded-2xl border border-primary/30 bg-gradient-to-b from-primary/20 to-transparent p-12 md:p-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Find Your Fastest Lap?</h2>
           <p className="text-white/60 mb-8 max-w-lg mx-auto">
             Download the app, point your phone at the PlayStation, and start capturing telemetry data in under 60 seconds.
           </p>
           <Link href="/signup">
-            <Button size="lg" className="bg-violet-600 hover:bg-violet-500 text-base px-8 h-12">
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-base px-8 h-12">
               Get Started Free <ChevronRight className="ml-2 h-4 w-4" />
             </Button>
           </Link>
@@ -301,7 +307,7 @@ export default function LandingPage() {
       <footer className="border-t border-white/10 py-8 px-6">
         <div className="mx-auto max-w-6xl flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/40">
           <div className="flex items-center gap-2">
-            <div className="h-6 w-6 rounded-md bg-violet-600 flex items-center justify-center">
+            <div className="h-6 w-6 rounded-md bg-primary flex items-center justify-center">
               <Gauge className="h-4 w-4 text-white" />
             </div>
             <span>fclan</span>

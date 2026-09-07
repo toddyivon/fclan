@@ -77,7 +77,7 @@ export function AnalysisHistory({ refreshKey, sessionLabels }: AnalysisHistoryPr
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <History className="h-4 w-4 text-violet-400" />
+          <History className="h-4 w-4 text-primary" />
           Analysis History
         </CardTitle>
         <CardDescription>Your most recent AI coaching reports.</CardDescription>
@@ -109,7 +109,7 @@ export function AnalysisHistory({ refreshKey, sessionLabels }: AnalysisHistoryPr
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2">
                         <span className="truncate text-sm font-medium">{sessionLabel}</span>
-                        <Badge variant="secondary" className="bg-violet-600/15 text-violet-300">
+                        <Badge variant="secondary" className="bg-primary/15 text-primary">
                           {item.lap_number != null && item.lap_number >= 0
                             ? `Lap ${item.lap_number}`
                             : "Full session"}

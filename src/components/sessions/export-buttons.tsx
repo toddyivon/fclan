@@ -27,9 +27,9 @@ export function ExportButtons({ sessionId, canExport }: ExportButtonsProps) {
         </Button>
         <span
           role="tooltip"
-          className="pointer-events-none absolute -top-9 left-1/2 z-20 hidden -translate-x-1/2 rounded-md border border-violet-500/40 bg-popover px-2 py-1 text-xs whitespace-nowrap text-popover-foreground shadow-md group-hover:block"
+          className="pointer-events-none absolute -top-9 left-1/2 z-20 hidden -translate-x-1/2 rounded-md border border-primary/40 bg-popover px-2 py-1 text-xs whitespace-nowrap text-popover-foreground shadow-md group-hover:block"
         >
-          Telemetry export is a <span className="font-medium text-violet-400">Pro</span> feature —
+          Telemetry export is a <span className="font-medium text-primary">Pro</span> feature —
           upgrade to unlock
         </span>
       </div>

@@ -88,7 +88,7 @@ export function ConsistencyCard({ laps, locked }: ConsistencyCardProps) {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-base">
-          <Activity className="h-4 w-4 text-violet-400" />
+          <Activity className="h-4 w-4 text-primary" />
           Consistency
         </CardTitle>
         <CardDescription>
@@ -99,9 +99,9 @@ export function ConsistencyCard({ laps, locked }: ConsistencyCardProps) {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-3 gap-3 text-sm">
-          <div className="rounded-lg border border-violet-500/30 bg-violet-500/5 px-3 py-2">
+          <div className="rounded-lg border border-primary/30 bg-primary/5 px-3 py-2">
             <p className="text-xs text-muted-foreground">Consistency</p>
-            <p className="font-mono font-medium text-violet-400">
+            <p className="font-mono font-medium text-primary">
               {consistency.toFixed(1)}%
             </p>
           </div>
@@ -145,7 +145,7 @@ export function ConsistencyCard({ laps, locked }: ConsistencyCardProps) {
         </div>
 
         <p className="text-xs text-muted-foreground">
-          Best lap <span className="font-mono text-violet-400">{formatLapTime(best)}</span>{" "}
+          Best lap <span className="font-mono text-primary">{formatLapTime(best)}</span>{" "}
           highlighted. Consistency = 1 − (std dev ÷ avg lap time).
         </p>
       </CardContent>
