@@ -1,6 +1,6 @@
 # APEX LAPS — Final Report & Consolidation Plan
 
-Repo: https://github.com/toddyivon/apex-laps · Local: ~/code/gt7-knowledge-db · Date: 2026-09-07
+Repo: https://github.com/toddyivon/fclan (renamed from apex-laps) · Local: ~/code/gt7-knowledge-db · Date: 2026-09-07
 
 ---
 
@@ -159,3 +159,22 @@ Also recommended: `agent-self-evaluation` after each stage, `skill-comply` for s
 - ~/code/gt7-knowledge-db/diagrams/gt7-system-architecture.excalidraw (architecture, validated)
 - ~/code/gt7-knowledge-db/diagrams/gt7-repo-provenance.excalidraw (provenance map, validated)
 - https://github.com/toddyivon/apex-laps — public consolidated repo (knowledge docs + diagrams)
+
+## 9. DEPLOYED — fclan is LIVE (2026-09-07)
+
+Production: **congo (Hostinger 69.62.64.171), port 3000** — `fclan-web` container
+(healthy), upgraded in place over the old gt7April deploy (`/opt/gt7`).
+
+- Pre-deploy: full pg_dump backup → `/opt/fclan-backups/pre-fclan-2026-09-07-0617.sql.gz` (486KB)
+- Old image tagged for instant rollback: `gt7-gt7-web:pre-fclan-2026-09-07` (`/opt/gt7` untouched)
+- No new migrations needed (001–007 identical; rankings/analysis use existing tables/views)
+- Same `.env.production` (Stripe stays in **test mode** as ordered — `sk_test_`/`whsec_` placeholders)
+- Smoke verified: `/` 200 + fclan title, `/dashboard` 307→login, `/api/me` + `/api/leaderboards` + `/api/leaderboards?standings=1` + `/api/sessions/:id/analysis` all 401 unauth (gates correct)
+- Rollback (if ever needed): `cd /opt/gt7 && docker compose start gt7-web` + stop fclan-web; DB restore from the backup file
+- SSH: `ssh fclan` (congo), `ssh fclan-hermes` (linode fallback) — key auth, configured 2026-09-07
+
+Shipped in this wave: Stage 1 (bootstrap+rebrand+4 security fixes), impeccable design pass
+(single violet, verdict banner, 4-item mobile nav, 0 detector findings), Stage 2 (sectors.ts +
+insights.ts, 24 tests), Stage 3 (6 Pro engines + 3 Python ports + /api/sessions/:id/analysis +
+SessionAnalysis UI), Stage 4 (rankings/tiers + standings API + badges). Suite: **85/85 unit tests,
+tsc clean, eslint clean, E2E extended (+8 assertions)**.
