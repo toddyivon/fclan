@@ -4,6 +4,8 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { getStripe } from "@/lib/billing/stripe";
 import { serverEnv } from "@/env";
 
+type Tier = "free" | "pro" | "ai_premium";
+
 function getServiceClient() {
   return createClient(
     serverEnv.NEXT_PUBLIC_SUPABASE_URL,
