@@ -1,0 +1,12 @@
+node_modules
+.next
+.git
+mobile-app
+*.md
+Dockerfile
+docker-compose*.yml
+.dockerignore
+.env*.local
+supabase
+scripts
+specs

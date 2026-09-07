@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "GT7 Telemetry",
+    "slug": "gt7-telemetry-mobile",
+    "scheme": "gt7telemetry",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.toddyone.gt7telemetry",
+      "infoPlist": {
+        "NSLocalNetworkUsageDescription": "This app reads Gran Turismo 7 telemetry from your PlayStation over the local network."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0A0A0A"
+      },
+      "package": "com.toddyone.gt7telemetry"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "b5d5990c-7fa9-4b26-8014-86691c06b897"
+      }
+    },
+    "owner": "toddyone"
+  }
+}
