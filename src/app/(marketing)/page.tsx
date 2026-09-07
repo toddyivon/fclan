@@ -97,7 +97,7 @@ export default function LandingPage() {
             <div className="h-8 w-8 rounded-lg bg-violet-600 flex items-center justify-center">
               <Gauge className="h-5 w-5" />
             </div>
-            <span className="font-bold text-xl tracking-tight">GT7 Telemetry</span>
+            <span className="font-bold text-xl tracking-tight">fclan</span>
           </motion.div>
           <div className="hidden md:flex items-center gap-8 text-sm text-white/60">
             <Link href="#features" className="hover:text-white transition-colors">Features</Link>
@@ -154,7 +154,7 @@ export default function LandingPage() {
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1]">
             Drive Faster with{" "}
             <span className="bg-gradient-to-r from-violet-400 to-purple-600 bg-clip-text text-transparent">
-              GT7 Telemetry
+              fclan
             </span>
           </h1>
           <p className="mt-6 text-lg md:text-xl text-white/60 max-w-2xl mx-auto leading-relaxed">
@@ -304,9 +304,9 @@ export default function LandingPage() {
             <div className="h-6 w-6 rounded-md bg-violet-600 flex items-center justify-center">
               <Gauge className="h-4 w-4 text-white" />
             </div>
-            <span>GT7 Telemetry</span>
+            <span>fclan</span>
           </div>
-          <p>&copy; 2026 GT7 Telemetry. Not affiliated with Polyphony Digital or Sony.</p>
+          <p>&copy; 2026 fclan. Not affiliated with Polyphony Digital or Sony.</p>
         </div>
       </footer>
     </div>

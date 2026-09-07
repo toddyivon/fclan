@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "GT7 Telemetry",
-    "slug": "gt7-telemetry-mobile",
-    "scheme": "gt7telemetry",
+    "name": "fclan",
+    "slug": "fclan-mobile",
+    "scheme": "fclan",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.toddyone.gt7telemetry",
+      "bundleIdentifier": "com.toddyone.fclan",
       "infoPlist": {
         "NSLocalNetworkUsageDescription": "This app reads Gran Turismo 7 telemetry from your PlayStation over the local network."
       }
@@ -18,7 +18,7 @@
       "adaptiveIcon": {
         "backgroundColor": "#0A0A0A"
       },
-      "package": "com.toddyone.gt7telemetry"
+      "package": "com.toddyone.fclan"
     },
     "web": {
       "bundler": "metro",

@@ -286,6 +286,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Rate limited" }, { status: 429 });
   }
 
+  const contentLength = Number(req.headers.get("content-length") ?? 0);
+  if (contentLength > 3_000_000) {
+    return NextResponse.json({ error: "Payload too large" }, { status: 413 });
+  }
+
   let raw: unknown;
   try {
     raw = await req.json();

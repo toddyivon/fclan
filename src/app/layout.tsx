@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "GT7 Telemetry — Lap Analysis & AI Coaching",
+  title: "fclan — Lap Analysis & AI Coaching",
   description:
     "Capture your Gran Turismo 7 telemetry data, analyze every lap with AI-powered insights, and become a faster driver.",
 };

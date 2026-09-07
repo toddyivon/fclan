@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { createClient as createAdminClient } from "@supabase/supabase-js";
+import { serverEnv } from "@/env";
 
 const PAGE_SIZE = 50;
 const TIERS = ["free", "pro", "ai_premium"] as const;
@@ -11,8 +12,8 @@ type Role = (typeof ROLES)[number];
 
 function getServiceClient() {
   return createAdminClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    serverEnv.NEXT_PUBLIC_SUPABASE_URL,
+    serverEnv.SUPABASE_SERVICE_ROLE_KEY,
     { auth: { persistSession: false } }
   );
 }

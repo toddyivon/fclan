@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient as createAdminClient } from "@supabase/supabase-js";
 import { formatLapTime } from "@/shared/telemetry";
+import { serverEnv } from "@/env";
 import { Badge } from "@/components/ui/badge";
 import { Car, Flag, Timer } from "lucide-react";
 
@@ -28,8 +29,8 @@ type SharePoint = {
 
 function getServiceClient() {
   return createAdminClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    serverEnv.NEXT_PUBLIC_SUPABASE_URL,
+    serverEnv.SUPABASE_SERVICE_ROLE_KEY,
     { auth: { persistSession: false } }
   );
 }

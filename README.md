@@ -1,4 +1,4 @@
-# GT7 Telemetry
+# fclan
 
 A telemetry SaaS for **Gran Turismo 7**. Your PlayStation streams encrypted telemetry over UDP at 60 Hz; a companion phone app decrypts it on the fly and forwards it to the cloud; a web dashboard turns it into live gauges, lap charts, track maps, ghost replays, fuel strategy, community leaderboards, and AI-powered lap coaching.
 

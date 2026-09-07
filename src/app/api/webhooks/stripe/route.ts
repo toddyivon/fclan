@@ -2,30 +2,29 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { getStripe } from "@/lib/billing/stripe";
+import { serverEnv } from "@/env";
 
 function getServiceClient() {
   return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    serverEnv.NEXT_PUBLIC_SUPABASE_URL,
+    serverEnv.SUPABASE_SERVICE_ROLE_KEY,
     { auth: { persistSession: false } }
   );
 }
-
-type Tier = "free" | "pro" | "ai_premium";
 
 const TIER_RANK: Record<Tier, number> = { free: 0, pro: 1, ai_premium: 2 };
 
 function tierForPrice(priceId: string | null | undefined): Tier {
   if (
     priceId &&
-    (priceId === process.env.STRIPE_PRICE_AI_PREMIUM ||
-      priceId === process.env.STRIPE_PRICE_AI_PREMIUM_ANNUAL)
+    (priceId === serverEnv.STRIPE_PRICE_AI_PREMIUM ||
+      priceId === serverEnv.STRIPE_PRICE_AI_PREMIUM_ANNUAL)
   ) {
     return "ai_premium";
   }
   if (
     priceId &&
-    (priceId === process.env.STRIPE_PRICE_PRO || priceId === process.env.STRIPE_PRICE_PRO_ANNUAL)
+    (priceId === serverEnv.STRIPE_PRICE_PRO || priceId === serverEnv.STRIPE_PRICE_PRO_ANNUAL)
   ) {
     return "pro";
   }
@@ -320,7 +319,7 @@ async function handleCheckoutCompleted(
 export async function POST(req: NextRequest) {
   const body = await req.text();
   const signature = req.headers.get("stripe-signature");
-  const secret = process.env.STRIPE_WEBHOOK_SECRET;
+  const secret = serverEnv.STRIPE_WEBHOOK_SECRET;
 
   if (!signature || !secret) {
     return NextResponse.json({ error: "Missing signature" }, { status: 400 });
