@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { readSessionPoints } from "@/lib/session-points";
 
 /**
  * GET /api/sessions/:id/points
@@ -14,8 +15,6 @@ import { createClient } from "@/lib/supabase/server";
  */
 
 const MAX_POINTS_RETURNED = 2000;
-const CHUNK_SIZE = 1000;
-const MAX_POINTS_SCANNED = 100_000;
 
 const BASIC_FIELDS = [
   "packet_id",
@@ -105,25 +104,12 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
   }
 
   // Page through PostgREST in 1000-row chunks until exhausted (or cap hit).
-  const all: PointRow[] = [];
-  for (let from = 0; from < MAX_POINTS_SCANNED; from += CHUNK_SIZE) {
-    const to = Math.min(from + CHUNK_SIZE, MAX_POINTS_SCANNED) - 1;
-    let query = supabase
-      .from("telemetry_points")
-      .select(columns)
-      .eq("session_id", id)
-      .order("packet_id", { ascending: true })
-      .range(from, to);
-    if (lap !== null) query = query.eq("lap_number", lap);
+  const { rows: all, error } = await readSessionPoints(supabase, id, columns, lap);
+  if (error) return NextResponse.json({ error }, { status: 500 });
 
-    const { data, error } = await query;
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-
-    const rows = (data ?? []) as unknown as PointRow[];
-    all.push(...rows);
-    if (rows.length < to - from + 1) break;
-  }
-
-  const reduced = downsample(all, MAX_POINTS_RETURNED);
+  // Sound: every FclanPointRow value is number|null (DB numerics), which is
+  // exactly what downsample averages. The cast keeps the row type strict
+  // everywhere else (adapter, analysis route).
+  const reduced = downsample(all as unknown as PointRow[], MAX_POINTS_RETURNED);
   return NextResponse.json({ points: reduced, total: all.length, sampled: reduced.length });
 }

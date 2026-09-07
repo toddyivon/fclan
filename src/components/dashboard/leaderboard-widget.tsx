@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { createClient } from "@/lib/supabase/server";
 import { formatLapTime } from "@/shared/telemetry";
 import { cn } from "@/lib/utils";
+import { buildDriverStandings, type DriverStanding } from "@/lib/rankings";
 
 /**
  * Community leaderboard queries shared by GET /api/leaderboards, the
@@ -83,8 +84,7 @@ export async function getTrackSummaries(
     .slice(0, max);
 }
 
-/** Ranked standings for one track plus the caller's own position (if any). */
-export async function getTrackLeaderboard(
+/** Ranked standings for one track plus the caller's own position (if any). */export async function getTrackLeaderboard(
   supabase: SupabaseClient,
   userId: string,
   track: string,
@@ -129,6 +129,46 @@ export async function getTrackLeaderboard(
   }
 
   return { track, entries, me };
+}
+
+/**
+ * Global driver standings: ranks every row of leaderboard_public per track
+ * (by lap time), then aggregates F1-style points across tracks. One query
+ * capped at 10k rows (same precedent as getTrackSummaries) — computation
+ * happens in JS via buildDriverStandings so the rule can't drift from tests.
+ */
+export async function getDriverStandings(
+  supabase: SupabaseClient,
+  maxRows: number = 10_000
+): Promise<DriverStanding[]> {
+  const { data, error } = await supabase
+    .from("leaderboard_public")
+    .select("driver_name, track_name, lap_time_ms")
+    .order("track_name", { ascending: true })
+    .order("lap_time_ms", { ascending: true })
+    .limit(maxRows);
+  if (error) throw new Error(error.message);
+
+  const rows = (data ?? []) as Array<{
+    driver_name: string;
+    track_name: string;
+    lap_time_ms: number;
+  }>;
+
+  // Rank within each track (rows already ordered track-major, time-minor).
+  const ranked: Array<{ driver_name: string; track_name: string; rank: number }> = [];
+  let currentTrack: string | null = null;
+  let rank = 0;
+  for (const r of rows) {
+    if (r.track_name !== currentTrack) {
+      currentTrack = r.track_name;
+      rank = 0;
+    }
+    rank++;
+    ranked.push({ driver_name: r.driver_name, track_name: r.track_name, rank });
+  }
+
+  return buildDriverStandings(ranked);
 }
 
 /** Dashboard widget: top 5 of the most active track + caller's position. */

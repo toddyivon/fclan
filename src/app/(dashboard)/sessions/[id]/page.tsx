@@ -10,6 +10,7 @@ import { LapCompare } from "@/components/sessions/lap-compare";
 import { GhostReplay } from "@/components/sessions/ghost-replay";
 import { FuelStrategy } from "@/components/sessions/fuel-strategy";
 import { ConsistencyCard } from "@/components/sessions/consistency-card";
+import { SessionAnalysis } from "@/components/sessions/session-analysis";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatLapTime } from "@/shared/telemetry";
 import { Flag, Timer, Sparkles } from "lucide-react";
@@ -172,6 +173,9 @@ export default async function SessionDetailPage({
         <LapsTable laps={lapRows} />
         <ConsistencyCard laps={chartLaps} locked={!canCompare} />
       </div>
+
+      {/* Harvested engines: corners, brake zones, fuel strategy, delta (Pro + gt7dashboard ports) */}
+      <SessionAnalysis sessionId={session.id} locked={!canCompare} />
     </div>
   );
 }

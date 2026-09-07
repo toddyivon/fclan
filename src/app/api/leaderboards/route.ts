@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import {
   clampLeaderboardLimit,
+  getDriverStandings,
   getTrackLeaderboard,
   getTrackSummaries,
 } from "@/components/dashboard/leaderboard-widget";
@@ -16,6 +17,11 @@ import {
  * `{ track, entries: [{ rank, driver_name, car_name, lap_time_ms, lap_number,
  * achieved_at }], me: { rank, lap_time_ms } | null }`.
  *
+ * With `standings=1`: global driver standings across tracks —
+ * `{ standings: [{ driver_name, points, tier, tracks, wins, podiums }] }`
+ * using F1-style points (see src/lib/rankings.ts). Intended for the
+ * community/standings surface and the mobile app.
+ *
  * Cookie-authed; reads go through the user client (view is GRANTed to
  * `authenticated`, base-table RLS allows authenticated SELECT).
  */
@@ -27,6 +33,19 @@ export async function GET(req: NextRequest) {
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const sp = req.nextUrl.searchParams;
+
+  if (sp.get("standings") === "1") {
+    try {
+      const standings = await getDriverStandings(supabase);
+      return NextResponse.json({ standings: standings.slice(0, 100) });
+    } catch (e) {
+      return NextResponse.json(
+        { error: e instanceof Error ? e.message : "Failed to load standings" },
+        { status: 500 }
+      );
+    }
+  }
+
   const track = sp.get("track")?.trim();
 
   try {

@@ -307,6 +307,32 @@ async function main() {
       check("export gated for free -> 403", r.status === 403, `got ${r.status}`);
     }
 
+    // ---------- analysis bundle (harvested engines) ----------
+    {
+      const r = await req("GET", `/api/sessions/${sessionId}/analysis`, { cookie: pro.cookieHeader });
+      const b = r.json ?? {};
+      check("analysis 200 with bundle shape",
+        r.status === 200 && b.bestLapNumber != null && Array.isArray(b.corners) &&
+        Array.isArray(b.brakeZones) && Array.isArray(b.fuelMaps),
+        `got ${r.status} best=${b.bestLapNumber}`);
+      check("analysis fuel maps 11 entries", (b.fuelMaps ?? []).length === 11,
+        `got ${(b.fuelMaps ?? []).length}`);
+      check("analysis consistency + median present",
+        typeof b?.consistency?.score === "number" && typeof b?.median?.title === "string",
+        `score=${b?.consistency?.score} median=${b?.median?.title}`);
+      check("analysis fuel strategy present",
+        typeof b?.fuel?.avgConsumptionPerLap === "number" && Array.isArray(b?.fuel?.recommendations),
+        JSON.stringify(b?.fuel ?? {}).slice(0, 120));
+    }
+    {
+      const r = await req("GET", `/api/sessions/${sessionId}/analysis`);
+      check("analysis unauth -> 401", r.status === 401, `got ${r.status}`);
+    }
+    {
+      const r = await req("GET", `/api/sessions/${sessionId}/analysis`, { cookie: free.cookieHeader });
+      check("analysis foreign session -> 404", r.status === 404, `got ${r.status}`);
+    }
+
     // ---------- AI analyze ----------
     {
       const r = await req("POST", "/api/ai/analyze", { cookie: free.cookieHeader, body: { session_id: sessionId } });
@@ -482,6 +508,18 @@ async function main() {
         r.status === 200 && entries.length >= 1 && entries[0].lap_time_ms === 91200,
         `got ${r.status} n=${entries.length} best=${entries[0]?.lap_time_ms}`);
       check("leaderboard exposes own rank", r.json?.me?.rank === 1, `me=${JSON.stringify(r.json?.me)}`);
+    }
+    {
+      const r = await req("GET", "/api/leaderboards?standings=1", { cookie: pro.cookieHeader });
+      const table = r.json?.standings ?? [];
+      const me = table.find((s) => s.points >= 25);
+      check("standings 200 with points + tiers",
+        r.status === 200 && Array.isArray(table) && table.length >= 1 &&
+        typeof table[0].points === "number",
+        `got ${r.status} n=${table.length}`);
+      check("standings winner has points and a tier",
+        !!me && typeof me.tier === "string" && me.wins >= 1,
+        JSON.stringify(me ?? {}).slice(0, 140));
     }
 
     // ---------- Wave 2: admin ----------

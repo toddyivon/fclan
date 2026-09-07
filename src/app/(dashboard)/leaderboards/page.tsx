@@ -9,10 +9,12 @@ import { formatLapTime } from "@/shared/telemetry";
 import { cn } from "@/lib/utils";
 import {
   LEADERBOARD_LIMIT_DEFAULT,
+  getDriverStandings,
   getTrackLeaderboard,
   getTrackSummaries,
   rankColor,
 } from "@/components/dashboard/leaderboard-widget";
+import { TierBadge } from "@/components/shared/tier-badge";
 
 function formatRelativeTime(iso: string): string {
   const diffMs = Date.now() - new Date(iso).getTime();
@@ -68,6 +70,8 @@ export default async function LeaderboardsPage({
       track,
       LEADERBOARD_LIMIT_DEFAULT
     );
+    const standings = await getDriverStandings(supabase);
+    const tierByDriver = new Map(standings.map((s) => [s.driver_name, s.tier]));
 
     return (
       <div className="space-y-6">
@@ -121,6 +125,7 @@ export default async function LeaderboardsPage({
                       {isMe && (
                         <Badge className="bg-primary/20 text-primary">You</Badge>
                       )}
+                      <TierBadge tier={tierByDriver.get(e.driver_name) ?? null} />
                     </span>
                     <span className="text-right font-mono text-sm tabular-nums">
                       {formatLapTime(e.lap_time_ms)}
@@ -156,6 +161,7 @@ export default async function LeaderboardsPage({
 
   // Track list view
   const tracks = await getTrackSummaries(supabase);
+  const standings = await getDriverStandings(supabase);
 
   return (
     <div className="space-y-6">
@@ -165,6 +171,36 @@ export default async function LeaderboardsPage({
           Community best laps per track. Pick a track to see the standings.
         </p>
       </div>
+
+      {standings.length > 0 && (
+        <div>
+          <h2 className="mb-3 text-lg font-semibold">Driver standings</h2>
+          <div className="overflow-hidden rounded-xl border border-border bg-card">
+            <div className="divide-y divide-border">
+              {standings.slice(0, 10).map((s, i) => (
+                <div
+                  key={s.driver_name}
+                  className="flex items-center justify-between gap-2 px-4 py-2.5"
+                >
+                  <span className="flex min-w-0 items-center gap-2">
+                    <span className={cn("w-6 text-center font-mono text-sm tabular-nums", rankColor(i + 1))}>
+                      {i + 1}
+                    </span>
+                    <span className="truncate font-medium">{s.driver_name}</span>
+                    <TierBadge tier={s.tier} />
+                  </span>
+                  <span className="flex items-center gap-3 text-sm text-muted-foreground">
+                    <span className="font-mono tabular-nums text-foreground">{s.points} pts</span>
+                    <span className="hidden sm:inline">
+                      {s.wins}W · {s.podiums}P · {s.tracks} tracks
+                    </span>
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {tracks.length === 0 ? (
         <EmptyState />
