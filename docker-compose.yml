@@ -1,16 +1,17 @@
 services:
-  gt7-web:
+  fclan-web:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: gt7-web
+    container_name: fclan-web
     restart: unless-stopped
     env_file:
       - .env.production
     ports:
-      - "3000:3000"
+      # WEB_PORT=3001 for side-by-side smoke tests next to the old gt7-web:3000.
+      - "${WEB_PORT:-3000}:3000"
     networks:
-      - gt7-network
+      - fclan-network
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://127.0.0.1:3000/"]
       interval: 30s
@@ -32,5 +33,5 @@ services:
         max-file: "3"
 
 networks:
-  gt7-network:
+  fclan-network:
     driver: bridge

@@ -137,7 +137,9 @@ interface TelemetryState {
 export const useTelemetryStore = create<TelemetryState>((set, get) => ({
   ps5Ip: null,
   apiKey: null,
-  ingestUrl: 'https://gt7.donodomorro.com',
+  // No default: the user must set their own ingest URL in Settings.
+  // (Previously defaulted to a production domain — removed in fclan.)
+  ingestUrl: "",
   voiceEnabled: true,
   trackName: null,
 
